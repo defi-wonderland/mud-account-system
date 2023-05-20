@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0;
 
 import { Counter } from "../codegen/Tables.sol";
+import { AccountPermissionSystem } from "./AccountPermissionsSystemAbstract.sol";
 
 contract IncrementSystem is AccountPermissionSystem {
   function increment() public returns (uint32) {
