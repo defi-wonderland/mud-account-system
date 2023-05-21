@@ -28,6 +28,7 @@
     "@latticexyz/std-contracts": "2.0.0-alpha.1.155",
     "@latticexyz/store": "2.0.0-alpha.1.155",
     "@latticexyz/world": "2.0.0-alpha.1.155",
+    "@openzeppelin/contracts": "^4.8.3",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
