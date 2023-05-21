@@ -31,7 +31,7 @@ export const Profile = ({
   useEffect(() => {
     try {
       // temporary fixed value:
-      const burner = "0x031f180be76498d769a66eca7e57cb44622116b7";
+      const burner = "0x58B56Ab1626834D41dfdd2e01E0d9DDcb6DC0d83";
 
       const accountFactory = getComponentValueStrict(
         AccountFactorySingleton,
