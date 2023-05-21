@@ -7,12 +7,17 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity }: SetupNetworkResult,
-  { Counter }: ClientComponents
+  { CounterGame }: ClientComponents
 ) {
-  const increment = async () => {
-    const tx = await worldSend("increment", []);
+  const createGame = async (firstAddress: string, secondAddress: string) => {
+    const tx = await worldSend("createGame", [firstAddress, secondAddress]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-    return getComponentValue(Counter, singletonEntity);
+    return getComponentValue(CounterGame, singletonEntity);
+  };
+  const acceptGame = async (gameId: string) => {
+    const tx = await worldSend("acceptGame", [gameId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    return getComponentValue(CounterGame, singletonEntity);
   };
 
   const createAccount = async () => {
@@ -21,7 +26,8 @@ export function createSystemCalls(
   };
 
   return {
-    increment,
+    createGame,
+    acceptGame,
     createAccount,
   };
 }
