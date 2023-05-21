@@ -17,14 +17,14 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Counter")));
-bytes32 constant CounterTableId = _tableId;
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("AccountFactorySi")));
+bytes32 constant AccountFactorySingletonTableId = _tableId;
 
-library Counter {
+library AccountFactorySingleton {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](1);
-    _schema[0] = SchemaType.UINT32;
+    _schema[0] = SchemaType.ADDRESS;
 
     return SchemaLib.encode(_schema);
   }
@@ -39,7 +39,7 @@ library Counter {
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](1);
     _fieldNames[0] = "value";
-    return ("Counter", _fieldNames);
+    return ("AccountFactorySingleton", _fieldNames);
   }
 
   /** Register the table's schema */
@@ -65,37 +65,37 @@ library Counter {
   }
 
   /** Get value */
-  function get() internal view returns (uint32 value) {
+  function get() internal view returns (address value) {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Get value (using the specified store) */
-  function get(IStore _store) internal view returns (uint32 value) {
+  function get(IStore _store) internal view returns (address value) {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Set value */
-  function set(uint32 value) internal {
+  function set(address value) internal {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
 
   /** Set value (using the specified store) */
-  function set(IStore _store, uint32 value) internal {
+  function set(IStore _store, address value) internal {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(uint32 value) internal view returns (bytes memory) {
+  function encode(address value) internal view returns (bytes memory) {
     return abi.encodePacked(value);
   }
 

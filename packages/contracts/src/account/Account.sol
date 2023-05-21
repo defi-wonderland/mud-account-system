@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0;
 
 import {IAuthController} from "../authController/AuthController.sol";
+import {ILimitCheckerSystem} from "../systems/LimitCheckerSystem.sol";
 
 interface IAccount {
     /**
@@ -18,15 +19,11 @@ interface IAccount {
         address client;
         address world;
         address system;
-        ILimitChecker limitChecker;
+        ILimitCheckerSystem limitChecker;
         bytes limitData;
     }
 }
 
-interface ILimitChecker {
-    function check(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes calldata _data)
-        external;
-}
 
 contract Account is IAccount {
     address public owner;
@@ -64,7 +61,8 @@ contract Account is IAccount {
     function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData) {
         PermissionData memory _permissionData = permissionData[_permissionId];
         require(_permissionData.client == msg.sender, "Account::execute: invalid client");
-        _permissionData.limitChecker.check(_permissionId, _permissionData, _data);
+        bool _allowed = _permissionData.limitChecker.checkAndUpdateLimit(_permissionId, _permissionData, _data);
+        if (!_allowed) revert("Account::execute: not allowed");
 
         bool _success;
         (_success, _returnData) = _permissionData.world.call(_data);
