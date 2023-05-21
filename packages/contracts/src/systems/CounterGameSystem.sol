@@ -12,21 +12,12 @@ import {IAccount} from "../account/Account.sol";
 
 contract CounterGameSystem is LimitCheckerSystem {
 
+    uint16 constant FINAL_COUNT = 20;
+
     function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData)
       external
       returns (bool _isAllowed) {
 
-    }
-
-    function checkGamer(address _gamer) private returns(uint8 _playerId) {
-      if(CounterGameSystem.getPlayer1() == _gamer) {
-        _playerId = 1;
-      } else if(CounterGameSystem.getPlayer2() == _gamer) {
-        _playerId = 2;
-      }
-      // else {
-      //   _playerId = 0;
-      // }
     }
     
     function createGame(address _player1, address _player2) external returns (bytes32 _gameId) {
@@ -35,18 +26,21 @@ contract CounterGameSystem is LimitCheckerSystem {
         CounterGameData({
           player1: _player1,
           player2: _player2,
-          player0Consent: false,
           player1Consent: false,
+          player2Consent: false,
           counter: 0,
           winner: address(0)
       }));
     }
 
     function acceptGame(bytes32 _gameId) external returns (bool _playerConsent) {
-      uint8 _playerId = checkGamer(_msgSender());
-      if(_playerId == 1) {
+      CounterGameData memory _counterGameData = CounterGame.get(_gameId);
+      if (_counterGameData.winner != address(0)) revert("Game is over");
+
+
+      if(_msgSender() == _counterGameData.player1) {
         CounterGame.setPlayer1Consent(_gameId, true);
-      } else if(_playerId == 2) {
+      } else if(_msgSender() == _counterGameData.player2) {
         CounterGame.setPlayer2Consent(_gameId, true);
       } else {
         //solint-disable-next-line
@@ -54,15 +48,21 @@ contract CounterGameSystem is LimitCheckerSystem {
       }
     }
 
-    function move(bytes32 _gameId) external returns (bool _playerConsent) {
-      uint8 _playerId = checkGamer(_msgSender());
-      if(_playerId == 0) {
+    function increment(bytes32 _gameId) external returns (bool _playerWon) {
+      CounterGameData memory _counterGameData = CounterGame.get(_gameId);
+      if (_counterGameData.winner != address(0)) revert("Game is over");
+      if (!_counterGameData.player1Consent || !_counterGameData.player2Consent) revert("Both players must consent to play");
+
+      if (_msgSender() != _counterGameData.player1 && _msgSender() != _counterGameData.player2) {
         revert("User is not participating in this game");
       }
-      
-      CounterGame.setCounter(CounterGame.getCounter() + 1);
 
-
+      uint16 _counter = CounterGame.getCounter(_gameId);
+      CounterGame.setCounter(_gameId, _counter);
+      if (_counter == FINAL_COUNT) {
+        _playerWon = true;
+        CounterGame.setWinner(_gameId, _msgSender());
+      }
 
     }
 

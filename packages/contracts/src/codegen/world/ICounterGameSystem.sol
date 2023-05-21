@@ -14,4 +14,6 @@ interface ICounterGameSystem {
   function createGame(address _player1, address _player2) external returns (bytes32 _gameId);
 
   function acceptGame(bytes32 _gameId) external returns (bool _playerConsent);
+
+  function increment(bytes32 _gameId) external returns (bool _playerWon);
 }
