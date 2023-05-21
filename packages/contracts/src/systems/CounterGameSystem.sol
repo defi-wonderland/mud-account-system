@@ -34,7 +34,7 @@ contract CounterGameSystem is LimitCheckerSystem {
       } else if (_functionSignature == ICounterGameSystem.acceptGame.selector) {
         _limitData = _data;
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
-        _limitData = _data; // _data - _functionSignate + _gameId
+        _limitData = _data; // _data = _functionSignate + _gameId
       } else {
         revert("CounterGameSystem::getPermissionData: unknown function");
       }
