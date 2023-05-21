@@ -14,6 +14,7 @@ export function createSystemCalls(
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };
+
   const acceptGame = async (gameId: string) => {
     const tx = await worldSend("acceptGame", [gameId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
