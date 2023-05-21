@@ -26,9 +26,16 @@ export function createSystemCalls(
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
+  const increment = async (gameId: string, message: string) => {
+    const tx = await worldSend("increment", [gameId, message]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    return getComponentValue(CounterGame, singletonEntity);
+  };
+
   return {
     createGame,
     acceptGame,
     createAccount,
+    increment,
   };
 }

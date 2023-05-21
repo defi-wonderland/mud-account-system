@@ -5,6 +5,7 @@ export const Game = () => {
   const {
     components: { CounterGame, AccountFactorySingleton },
     network: { singletonEntity },
+    systemCalls: { increment },
   } = useMUD();
 
   return (
@@ -15,7 +16,13 @@ export const Game = () => {
         type="button"
         onClick={async (event) => {
           event.preventDefault();
-          // console.log("new counter value:", await increment());
+          console.log(
+            "new counter value:",
+            await increment(
+              "0x0000000000000000000000000000000000000000000000000000000000000001",
+              ""
+            )
+          );
         }}
       >
         Increment
