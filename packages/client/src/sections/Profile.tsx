@@ -32,7 +32,7 @@ export const Profile = ({ account, burner, signer, chainId, connect }: ProfilePr
       <br />
       <br />
       <p>Signer Accounts:</p>
-      <p>Account address: {account}</p>
+      <p>Account contract: {account}</p>
       <br />
     </div>
   );
