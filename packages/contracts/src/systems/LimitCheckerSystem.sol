@@ -17,6 +17,10 @@ interface ILimitCheckerSystem {
     function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes memory _data)
         external
         returns (bool _allowed);
+    
+    function getPermissionData(bytes calldata _data)
+        external view
+        returns (bytes memory _limitData);
 }
 
 /**

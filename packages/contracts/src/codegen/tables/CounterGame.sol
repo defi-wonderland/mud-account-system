@@ -27,18 +27,20 @@ struct CounterGameData {
   bool player1Consent;
   bool player2Consent;
   uint16 counter;
+  string message;
 }
 
 library CounterGame {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](6);
+    SchemaType[] memory _schema = new SchemaType[](7);
     _schema[0] = SchemaType.ADDRESS;
     _schema[1] = SchemaType.ADDRESS;
     _schema[2] = SchemaType.ADDRESS;
     _schema[3] = SchemaType.BOOL;
     _schema[4] = SchemaType.BOOL;
     _schema[5] = SchemaType.UINT16;
+    _schema[6] = SchemaType.STRING;
 
     return SchemaLib.encode(_schema);
   }
@@ -52,13 +54,14 @@ library CounterGame {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](6);
+    string[] memory _fieldNames = new string[](7);
     _fieldNames[0] = "player1";
     _fieldNames[1] = "player2";
     _fieldNames[2] = "winner";
     _fieldNames[3] = "player1Consent";
     _fieldNames[4] = "player2Consent";
     _fieldNames[5] = "counter";
+    _fieldNames[6] = "message";
     return ("CounterGame", _fieldNames);
   }
 
@@ -288,6 +291,124 @@ library CounterGame {
     _store.setField(_tableId, _keyTuple, 5, abi.encodePacked((counter)));
   }
 
+  /** Get message */
+  function getMessage(bytes32 key) internal view returns (string memory message) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 6);
+    return (string(_blob));
+  }
+
+  /** Get message (using the specified store) */
+  function getMessage(IStore _store, bytes32 key) internal view returns (string memory message) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 6);
+    return (string(_blob));
+  }
+
+  /** Set message */
+  function setMessage(bytes32 key, string memory message) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 6, bytes((message)));
+  }
+
+  /** Set message (using the specified store) */
+  function setMessage(IStore _store, bytes32 key, string memory message) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.setField(_tableId, _keyTuple, 6, bytes((message)));
+  }
+
+  /** Get the length of message */
+  function lengthMessage(bytes32 key) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 6, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get the length of message (using the specified store) */
+  function lengthMessage(IStore _store, bytes32 key) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 6, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get an item of message (unchecked, returns invalid data if index overflows) */
+  function getItemMessage(bytes32 key, uint256 _index) internal view returns (string memory) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 6, getSchema(), _index * 1, (_index + 1) * 1);
+    return (string(_blob));
+  }
+
+  /** Get an item of message (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItemMessage(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 6, getSchema(), _index * 1, (_index + 1) * 1);
+    return (string(_blob));
+  }
+
+  /** Push a slice to message */
+  function pushMessage(bytes32 key, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.pushToField(_tableId, _keyTuple, 6, bytes((_slice)));
+  }
+
+  /** Push a slice to message (using the specified store) */
+  function pushMessage(IStore _store, bytes32 key, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.pushToField(_tableId, _keyTuple, 6, bytes((_slice)));
+  }
+
+  /** Pop a slice from message */
+  function popMessage(bytes32 key) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.popFromField(_tableId, _keyTuple, 6, 1);
+  }
+
+  /** Pop a slice from message (using the specified store) */
+  function popMessage(IStore _store, bytes32 key) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.popFromField(_tableId, _keyTuple, 6, 1);
+  }
+
+  /** Update a slice of message at `_index` */
+  function updateMessage(bytes32 key, uint256 _index, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.updateInField(_tableId, _keyTuple, 6, _index * 1, bytes((_slice)));
+  }
+
+  /** Update a slice of message (using the specified store) at `_index` */
+  function updateMessage(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.updateInField(_tableId, _keyTuple, 6, _index * 1, bytes((_slice)));
+  }
+
   /** Get the full data */
   function get(bytes32 key) internal view returns (CounterGameData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -314,9 +435,10 @@ library CounterGame {
     address winner,
     bool player1Consent,
     bool player2Consent,
-    uint16 counter
+    uint16 counter,
+    string memory message
   ) internal {
-    bytes memory _data = encode(player1, player2, winner, player1Consent, player2Consent, counter);
+    bytes memory _data = encode(player1, player2, winner, player1Consent, player2Consent, counter, message);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -333,9 +455,10 @@ library CounterGame {
     address winner,
     bool player1Consent,
     bool player2Consent,
-    uint16 counter
+    uint16 counter,
+    string memory message
   ) internal {
-    bytes memory _data = encode(player1, player2, winner, player1Consent, player2Consent, counter);
+    bytes memory _data = encode(player1, player2, winner, player1Consent, player2Consent, counter, message);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -352,7 +475,8 @@ library CounterGame {
       _table.winner,
       _table.player1Consent,
       _table.player2Consent,
-      _table.counter
+      _table.counter,
+      _table.message
     );
   }
 
@@ -366,12 +490,16 @@ library CounterGame {
       _table.winner,
       _table.player1Consent,
       _table.player2Consent,
-      _table.counter
+      _table.counter,
+      _table.message
     );
   }
 
   /** Decode the tightly packed blob using this table's schema */
-  function decode(bytes memory _blob) internal pure returns (CounterGameData memory _table) {
+  function decode(bytes memory _blob) internal view returns (CounterGameData memory _table) {
+    // 64 is the total byte length of static data
+    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 64));
+
     _table.player1 = (address(Bytes.slice20(_blob, 0)));
 
     _table.player2 = (address(Bytes.slice20(_blob, 20)));
@@ -383,6 +511,17 @@ library CounterGame {
     _table.player2Consent = (_toBool(uint8(Bytes.slice1(_blob, 61))));
 
     _table.counter = (uint16(Bytes.slice2(_blob, 62)));
+
+    // Store trims the blob if dynamic fields are all empty
+    if (_blob.length > 64) {
+      uint256 _start;
+      // skip static data length + dynamic lengths word
+      uint256 _end = 96;
+
+      _start = _end;
+      _end += _encodedLengths.atIndex(0);
+      _table.message = (string(SliceLib.getSubslice(_blob, _start, _end).toBytes()));
+    }
   }
 
   /** Tightly pack full data using this table's schema */
@@ -392,9 +531,24 @@ library CounterGame {
     address winner,
     bool player1Consent,
     bool player2Consent,
-    uint16 counter
+    uint16 counter,
+    string memory message
   ) internal view returns (bytes memory) {
-    return abi.encodePacked(player1, player2, winner, player1Consent, player2Consent, counter);
+    uint40[] memory _counters = new uint40[](1);
+    _counters[0] = uint40(bytes(message).length);
+    PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
+
+    return
+      abi.encodePacked(
+        player1,
+        player2,
+        winner,
+        player1Consent,
+        player2Consent,
+        counter,
+        _encodedLengths.unwrap(),
+        bytes((message))
+      );
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

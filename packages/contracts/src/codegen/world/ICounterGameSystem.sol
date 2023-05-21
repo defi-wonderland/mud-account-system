@@ -6,15 +6,17 @@ pragma solidity >=0.8.0;
 import { IAccount } from "./../../account/Account.sol";
 
 interface ICounterGameSystem {
+  function getPermissionData(bytes calldata _data) external view returns (bytes memory _limitData);
+
   function checkAndUpdateLimit(
     uint256 _permissionId,
     IAccount.PermissionData calldata _permissionData,
-    bytes memory _data
+    bytes calldata _data
   ) external returns (bool _allowed);
 
   function createGame(address _player1, address _player2) external returns (bytes32 _gameId);
 
   function acceptGame(bytes32 _gameId) external returns (bool _playerConsent);
 
-  function increment(bytes32 _gameId) external returns (bool _playerWon);
+  function increment(bytes32 _gameId, string calldata _message) external returns (bool _playerWon);
 }

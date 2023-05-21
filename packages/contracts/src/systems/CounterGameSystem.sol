@@ -22,10 +22,28 @@ contract CounterGameSystem is LimitCheckerSystem {
 
     mapping(uint256 => bool) public oneTimePermission;
 
+
+    function getPermissionData(
+      bytes calldata _data
+    ) external view returns (bytes memory _limitData) {
+
+      bytes4 _functionSignature = bytes4(_data);
+
+      if (_functionSignature == ICounterGameSystem.createGame.selector) {
+        _limitData = _data;
+      } else if (_functionSignature == ICounterGameSystem.acceptGame.selector) {
+        _limitData = _data;
+      } else if (_functionSignature == ICounterGameSystem.increment.selector) {
+        _limitData = _data; // _data - _functionSignate + _gameId
+      } else {
+        revert("CounterGameSystem::getPermissionData: unknown function");
+      }
+    }
+
     function checkAndUpdateLimit(
       uint256 _permissionId,
       IAccount.PermissionData calldata _permissionData,
-      bytes memory _data
+      bytes calldata _data
     ) external returns (bool _allowed) {
       // grab first 4 bytes of limitData
       bytes4 _functionSignature = bytes4(_permissionData.limitData);
@@ -46,7 +64,10 @@ contract CounterGameSystem is LimitCheckerSystem {
         oneTimePermission[_permissionId] = true;
 
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
-        _allowed = keccak256(_permissionData.limitData) == keccak256(_data);
+        // _data     = _functionSignate + _gameId + _message
+        // limitData = _functionSignate + _gameId
+        // Only validate _functionSignate + _gameId
+        _allowed = keccak256(_permissionData.limitData) == keccak256(_data[:36]);
       } else {
         revert("CounterGameSystem::checkAndUpdateLimit: unknown function");
       }
@@ -63,7 +84,8 @@ contract CounterGameSystem is LimitCheckerSystem {
           player1Consent: false,
           player2Consent: false,
           counter: 0,
-          winner: address(0)
+          winner: address(0),
+          message: ""
       }));
     }
 
@@ -81,7 +103,8 @@ contract CounterGameSystem is LimitCheckerSystem {
       }
     }
 
-    function increment(bytes32 _gameId) external returns (bool _playerWon) {
+    function increment(bytes32 _gameId, string calldata _message) external returns (bool _playerWon) {
+    // function increment(bytes32 _gameId) external returns (bool _playerWon) {
       CounterGameData memory _counterGameData = CounterGame.get(_gameId);
       if (_counterGameData.winner != address(0)) revert("Game is over");
       if (!_counterGameData.player1Consent || !_counterGameData.player2Consent) revert("Both players must consent to play");
@@ -95,8 +118,8 @@ contract CounterGameSystem is LimitCheckerSystem {
       if (_counter == FINAL_COUNT) {
         _playerWon = true;
         CounterGame.setWinner(_gameId, _msgSender());
+        CounterGame.setMessage(_gameId, _message);
       }
-
     }
 
 

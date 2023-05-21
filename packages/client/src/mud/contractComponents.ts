@@ -16,6 +16,7 @@ export function defineContractComponents(world: World) {
           player1Consent: RecsType.Boolean,
           player2Consent: RecsType.Boolean,
           counter: RecsType.Number,
+          message: RecsType.String,
         },
         {
           metadata: {

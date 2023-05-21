@@ -10,6 +10,7 @@ export default mudConfig({
         player1Consent:"bool",
         player2Consent:"bool",
         counter: "uint16",
+        message: "string",
       },
     },
     AccountFactorySingleton: {
