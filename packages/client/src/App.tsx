@@ -1,29 +1,27 @@
-import { useComponentValue } from "@latticexyz/react";
-import { useMUD } from "./MUDContext";
+import "./styles.css";
+
+import { useProvider } from "./hooks";
+import { CreateGame, Game, JoinGame, Profile } from "./sections";
 
 export const App = () => {
-  const {
-    components: { Counter },
-    systemCalls: { increment },
-    network: { singletonEntity },
-  } = useMUD();
-
-  const counter = useComponentValue(Counter, singletonEntity);
+  const { connect, signMessage, account, chainId } = useProvider();
 
   return (
     <>
-      <div>
-        Counter: <span>{counter?.value ?? "??"}</span>
-      </div>
-      <button
-        type="button"
-        onClick={async (event) => {
-          event.preventDefault();
-          console.log("new counter value:", await increment());
-        }}
-      >
-        Increment
-      </button>
+      {/* Profile section */}
+      <Profile account={account} chainId={chainId} connect={connect} />
+      {account && (
+        <>
+          {/* Game Creation Section */}
+          <CreateGame signMessage={signMessage} />
+
+          {/* Join Game Section */}
+          <JoinGame signMessage={signMessage} />
+
+          {/* Game Section */}
+          <Game />
+        </>
+      )}
     </>
   );
 };
