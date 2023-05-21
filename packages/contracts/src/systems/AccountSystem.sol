@@ -21,4 +21,8 @@ contract AccountSystem is System {
     return address(IAccountFactory(ACCOUNT_FACTORY).createAccount(_msgSender()));
   }
 
+  function ownerAccounts(address _owner, uint256 _index) external view returns (address) {
+    return IAccountFactory(ACCOUNT_FACTORY).ownerAccounts(_owner, _index);
+  }
+
 }

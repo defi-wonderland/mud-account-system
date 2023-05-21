@@ -7,4 +7,6 @@ interface IAccountSystem {
   function setAccountFactory(address _accountFactory) external;
 
   function createAccount() external returns (address _account);
+
+  function ownerAccounts(address _owner, uint256 _index) external view returns (address);
 }
