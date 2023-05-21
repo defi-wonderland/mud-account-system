@@ -7,8 +7,6 @@ import {System} from "@latticexyz/world/src/System.sol";
 import {IAccount} from "../account/Account.sol";
 
 interface ILimitCheckerSystem {
-
-
     /**
      * @notice Checks if the permission is allowed, and updates the last state of it.
      * @dev It has to check if the permission is allowed, comparing it with the limitData defined.
