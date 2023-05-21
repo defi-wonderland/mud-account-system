@@ -2,9 +2,22 @@ import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
   tables: {
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
+    CounterGame: {
+      schema: {
+        player1: "address",
+        player2: "address",
+        winner: "address",
+        player1Consent:"bool",
+        player2Consent:"bool",
+        counter: "uint16",
+      },
     },
   },
+  modules: [
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [],
+    }
+  ]
 });
