@@ -43,8 +43,14 @@ export const CreateGame = ({ signMessage }: CreateGameProps) => {
         return (
           <div className="section" key={game.player1 + index}>
             <p>game id:{id}</p>
-            <p>player 1:{game.player1}</p>
-            <p>player 2:{game.player2}</p>
+            <p>
+              player 1:{game.player1}, ready:{" "}
+              {game.player1Consent ? "yes" : "no"}
+            </p>
+            <p>
+              player 2:{game.player2}, ready{" "}
+              {game.player2Consent ? "yes" : "no"}
+            </p>
           </div>
         );
       })}

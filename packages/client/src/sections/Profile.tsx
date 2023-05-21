@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getComponentValueStrict, Has } from "@latticexyz/recs";
 import { useEntityQuery } from "@latticexyz/react";
+import { getBurnerWallet } from "@latticexyz/std-client";
+import { Wallet } from "ethers";
 
 import { useAccountSysten } from "../hooks";
 import { useMUD } from "../MUDContext";
@@ -27,12 +29,12 @@ export const Profile = ({
   const { getAccounts } = useAccountSysten();
   const [accounts, setAccounts] = useState<string[]>([]);
   const accountSystemId = useEntityQuery([Has(AccountFactorySingleton)]);
+  const burnerWallet = new Wallet(getBurnerWallet().value);
 
-  useEffect(() => {
+  const handleGetAccounts = async () => {
     try {
-      // temporary fixed value:
-      const burner = "0x58B56Ab1626834D41dfdd2e01E0d9DDcb6DC0d83";
-
+      const burner = await burnerWallet.getAddress();
+      console.log(burner);
       const accountFactory = getComponentValueStrict(
         AccountFactorySingleton,
         accountSystemId[0]
@@ -44,6 +46,10 @@ export const Profile = ({
     } catch (error) {
       console.log("error gettting AccountSystem");
     }
+  };
+
+  useEffect(() => {
+    handleGetAccounts();
   }, [accountSystemId]);
 
   return (

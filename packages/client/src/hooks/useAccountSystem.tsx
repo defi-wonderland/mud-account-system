@@ -1,6 +1,5 @@
 import { ethers, providers } from "ethers";
 import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
-import { getNetworkConfig } from "../mud/getNetworkConfig";
 
 export const useAccountSysten = () => {
   const getAccounts = async (
@@ -11,7 +10,7 @@ export const useAccountSysten = () => {
     const accountFactoryContract = new ethers.Contract(
       accountFactory,
       AccountSystemABI,
-      new providers.JsonRpcProvider((await getNetworkConfig()).provider.jsonRpcUrl)
+      new providers.JsonRpcProvider()
     );
 
     return accountFactoryContract.ownerAccounts(burnerAccount, index);
