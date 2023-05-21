@@ -34,7 +34,7 @@ contract CounterGameSystem is LimitCheckerSystem {
       } else if (_functionSignature == ICounterGameSystem.acceptGame.selector) {
         _limitData = _data;
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
-        _limitData = _data; // _data - _functionSignate + _gameId
+        _limitData = _data; // _data = _functionSignate + _gameId
       } else {
         revert("CounterGameSystem::getPermissionData: unknown function");
       }
@@ -94,8 +94,10 @@ contract CounterGameSystem is LimitCheckerSystem {
       if (_counterGameData.winner != address(0)) revert("Game is over");
 
       if(_msgSender() == _counterGameData.player1) {
+        if (_counterGameData.player1Consent) revert("Player 1 already consented");
         CounterGame.setPlayer1Consent(_gameId, true);
       } else if(_msgSender() == _counterGameData.player2) {
+        if (_counterGameData.player2Consent) revert("Player 2 already consented");
         CounterGame.setPlayer2Consent(_gameId, true);
       } else {
         //solint-disable-next-line
