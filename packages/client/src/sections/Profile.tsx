@@ -4,7 +4,7 @@ import { useEntityQuery } from "@latticexyz/react";
 import { getBurnerWallet } from "@latticexyz/std-client";
 import { Wallet } from "ethers";
 
-import { useAccountSysten } from "../hooks";
+import { useAccountSystem } from "../hooks";
 import { useMUD } from "../MUDContext";
 
 interface ProfileProps {
@@ -26,7 +26,7 @@ export const Profile = ({
     systemCalls: { createAccount },
     components: { AccountFactorySingleton },
   } = useMUD();
-  const { getAccounts } = useAccountSysten();
+  const { getAccounts } = useAccountSystem();
   const [accounts, setAccounts] = useState<string[]>([]);
   const accountSystemId = useEntityQuery([Has(AccountFactorySingleton)]);
   const burnerWallet = new Wallet(getBurnerWallet().value);

@@ -2,7 +2,7 @@ import { ethers, providers } from "ethers";
 import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 
-export const useAccountSysten = () => {
+export const useAccountSystem = () => {
   const getAccounts = async (
     accountFactory: string,
     burnerAccount: string,
