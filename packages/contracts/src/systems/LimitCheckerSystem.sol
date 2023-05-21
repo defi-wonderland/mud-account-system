@@ -12,11 +12,11 @@ interface ILimitCheckerSystem {
      * @dev It has to check if the permission is allowed, comparing it with the limitData defined.
      * @param _permissionId The permission id.
      * @param _permissionData The permission data.
-     * @return _isAllowed True if the permission is allowed.
+     * @return _allowed True if the permission is allowed.
      */
-    function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData)
+    function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes memory _data)
         external
-        returns (bool _isAllowed);
+        returns (bool _allowed);
 }
 
 /**

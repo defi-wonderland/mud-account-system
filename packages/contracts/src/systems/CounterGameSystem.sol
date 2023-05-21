@@ -14,9 +14,13 @@ contract CounterGameSystem is LimitCheckerSystem {
 
     uint16 constant FINAL_COUNT = 20;
 
-    function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData)
+    function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes memory _data)
       external
-      returns (bool _isAllowed) {
+      returns (bool _allowed) {
+        // grab first 4 bytes of limitData
+        bytes4 _signature = bytes4(_permissionData.limitData);
+        // if (_permissionData.limitData)
+        // if (_permissionData.limitData.length == 0) revert("CounterGameSystem::checkAndUpdateLimit: wrong limit data");
 
     }
     

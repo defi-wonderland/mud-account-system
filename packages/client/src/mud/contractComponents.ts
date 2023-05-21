@@ -25,5 +25,20 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    AccountFactorySingleton: (() => {
+      const tableId = new TableId("", "AccountFactorySi");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

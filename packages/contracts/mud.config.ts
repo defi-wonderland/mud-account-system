@@ -12,6 +12,10 @@ export default mudConfig({
         counter: "uint16",
       },
     },
+    AccountFactorySingleton: {
+      keySchema: {},
+      schema: "address",
+    },
   },
   modules: [
     {

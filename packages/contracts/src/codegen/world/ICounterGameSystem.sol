@@ -8,8 +8,9 @@ import { IAccount } from "./../../account/Account.sol";
 interface ICounterGameSystem {
   function checkAndUpdateLimit(
     uint256 _permissionId,
-    IAccount.PermissionData calldata _permissionData
-  ) external returns (bool _isAllowed);
+    IAccount.PermissionData calldata _permissionData,
+    bytes memory _data
+  ) external returns (bool _allowed);
 
   function createGame(address _player1, address _player2) external returns (bytes32 _gameId);
 
