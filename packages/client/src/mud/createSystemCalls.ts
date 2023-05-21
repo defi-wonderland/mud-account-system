@@ -15,7 +15,13 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity);
   };
 
+  const createAccount = async () => {
+    const tx = await worldSend("createAccount", []);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
   return {
     increment,
+    createAccount,
   };
 }
