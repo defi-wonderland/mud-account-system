@@ -34,7 +34,7 @@ contract CounterGameSystem is LimitCheckerSystem {
       } else if (_functionSignature == ICounterGameSystem.acceptGame.selector) {
         _limitData = _data;
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
-        _limitData = _data; // _data = _functionSignate + _gameId
+        _limitData = _data; // _data = _functionSignature + _gameId
       } else {
         revert("CounterGameSystem::getPermissionData: unknown function");
       }
@@ -64,9 +64,9 @@ contract CounterGameSystem is LimitCheckerSystem {
         oneTimePermission[_permissionId] = true;
 
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
-        // _data     = _functionSignate + _gameId + _message
-        // limitData = _functionSignate + _gameId
-        // Only validate _functionSignate + _gameId
+        // _data     = _functionSignature + _gameId + _message
+        // limitData = _functionSignature + _gameId
+        // Only validate _functionSignature + _gameId
         _allowed = keccak256(_permissionData.limitData) == keccak256(_data[:36]);
       } else {
         revert("CounterGameSystem::checkAndUpdateLimit: unknown function");
@@ -115,7 +115,7 @@ contract CounterGameSystem is LimitCheckerSystem {
         revert("User is not participating in this game");
       }
 
-      uint16 _counter = CounterGame.getCounter(_gameId);
+      uint16 _counter = CounterGame.getCounter(_gameId) + 1;
       CounterGame.setCounter(_gameId, _counter);
       if (_counter == FINAL_COUNT) {
         _playerWon = true;

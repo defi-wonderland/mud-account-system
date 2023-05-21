@@ -1,5 +1,6 @@
 import { ethers, providers } from "ethers";
 import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
+import AccountABI from "../abi/Account.sol/Account.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 
 export const useAccountSystem = () => {
@@ -15,9 +16,22 @@ export const useAccountSystem = () => {
     );
 
     return accountFactoryContract.ownerAccounts(burnerAccount, index);
-  };
+  }
+
+  const sendAsAccount = async (
+    account: string,
+  ) => {
+    const accountContract = new ethers.Contract(
+      account,
+      AccountABI,
+      new providers.JsonRpcProvider((await getNetworkConfig()).provider.jsonRpcUrl)
+    );
+
+
+  }
 
   return {
     getAccounts,
+    sendAsAccount,
   };
 };
