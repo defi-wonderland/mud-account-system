@@ -21,8 +21,6 @@ interface ILimitChecker {
         address client;
         address world;
         address system;
-        bytes4 functionSig;
-        bytes functionParams;
         address limitChecker;
         bytes limitData;
     }
@@ -46,7 +44,7 @@ interface ILimitChecker {
  * @dev Each function should contain its own limit data.
  * @dev Each function should contain getter with the defined params returning `PermissionData`
  */
-abstract contract LimitChecker is System, ILimitChecker {
+abstract contract LimitCheckerSystem is System, ILimitChecker {
     /**
      * @notice It saves the limit data state for a permission id.
      * @dev permissionId => limitData
