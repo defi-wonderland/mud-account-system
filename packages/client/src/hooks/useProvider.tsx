@@ -4,7 +4,7 @@ import { providers } from "ethers";
 interface ProviderState {
   provider?: providers.JsonRpcProvider | undefined;
   signer?: providers.JsonRpcSigner | undefined;
-  account?: string;
+  signerAddress?: string;
   chainId?: number;
   gameProvider: providers.JsonRpcProvider | undefined;
 }
@@ -14,7 +14,7 @@ export const useProvider = () => {
     gameProvider: new providers.JsonRpcProvider(),
   });
 
-  const { provider, signer, account, chainId, gameProvider } = state;
+  const { provider, signer, signerAddress, chainId, gameProvider } = state;
 
   const connect = async () => {
     if (window.ethereum) {
@@ -24,7 +24,7 @@ export const useProvider = () => {
       const signer = provider.getSigner();
       const address = await signer.getAddress();
       const chainId = await signer.getChainId();
-      setState({ ...state, provider, signer, account: address, chainId });
+      setState({ ...state, provider, signer, signerAddress: address, chainId });
     }
   };
 
@@ -42,7 +42,7 @@ export const useProvider = () => {
   return {
     provider,
     signer,
-    account,
+    signerAddress,
     chainId,
     connect,
     signMessage,

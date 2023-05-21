@@ -30,21 +30,21 @@ export const CreateGame = ({ signMessage }: CreateGameProps) => {
       <br />
       <button
         onClick={async () => {
-          const test = await createGame(player1, player2);
-          console.log(test);
+          await createGame(player1, player2);
         }}
       >
         Create Game
       </button>
       <br />
+      <br />
       <p>Open games:</p>
       {[...games].map((id, index) => {
         const game = getComponentValueStrict(CounterGame, id);
-        console.log(game);
         return (
           <div className="section" key={game.player1 + index}>
-            <p>player 1:{game.player1.slice(0, 6)}</p>
-            <p>player 2:{game.player2.slice(0, 6)}</p>
+            <p>game id:{id}</p>
+            <p>player 1:{game.player1}</p>
+            <p>player 2:{game.player2}</p>
           </div>
         );
       })}

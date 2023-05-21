@@ -2,13 +2,19 @@ import { useMUD } from "../MUDContext";
 
 interface ProfileProps {
   signer?: string;
-  account?: string;
+  signerAddress?: string;
   burner?: string;
   chainId?: number;
   connect?: () => void;
 }
 
-export const Profile = ({ account, burner, signer, chainId, connect }: ProfileProps) => {
+export const Profile = ({
+  signerAddress,
+  burner,
+  signer,
+  chainId,
+  connect,
+}: ProfileProps) => {
   const {
     systemCalls: { createAccount },
   } = useMUD();
@@ -23,7 +29,7 @@ export const Profile = ({ account, burner, signer, chainId, connect }: ProfilePr
       </button>
       <br />
       <br />
-      <p>Signer address: {signer}</p>
+      <p>Signer address: {signerAddress}</p>
       <p>ChainId: {chainId}</p>
       <br />
       <p>Burner address: {burner}</p>
@@ -32,7 +38,7 @@ export const Profile = ({ account, burner, signer, chainId, connect }: ProfilePr
       <br />
       <br />
       <p>Signer Accounts:</p>
-      <p>Account contract: {account}</p>
+      <p>Account contract: {signerAddress}</p>
       <br />
     </div>
   );
