@@ -10,22 +10,52 @@ import {
 } from "../codegen/Tables.sol";
 import {IAccount} from "../account/Account.sol";
 
+interface ICounterGameSystem {
+  function createGame(address _player1, address _player2) external returns (bytes32 _gameId);
+  function acceptGame(bytes32 _gameId) external returns (bool _playerConsent);
+  function increment(bytes32 _gameId) external returns (bool _playerWon);
+}
+
 contract CounterGameSystem is LimitCheckerSystem {
 
     uint16 constant FINAL_COUNT = 20;
 
-    function checkAndUpdateLimit(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes memory _data)
-      external
-      returns (bool _allowed) {
-        // grab first 4 bytes of limitData
-        bytes4 _signature = bytes4(_permissionData.limitData);
-        // if (_permissionData.limitData)
-        // if (_permissionData.limitData.length == 0) revert("CounterGameSystem::checkAndUpdateLimit: wrong limit data");
+    mapping(uint256 => bool) public oneTimePermission;
 
+    function checkAndUpdateLimit(
+      uint256 _permissionId,
+      IAccount.PermissionData calldata _permissionData,
+      bytes memory _data
+    ) external returns (bool _allowed) {
+      // grab first 4 bytes of limitData
+      bytes4 _functionSignature = bytes4(_permissionData.limitData);
+      // TODO: we assume that singnatures are unique, but we should check that :)
+
+      if (_functionSignature == ICounterGameSystem.createGame.selector) {
+        // check that _permissionId can only be executed once
+        if (oneTimePermission[_permissionId]) revert("CounterGameSystem::checkAndUpdateLimit: permission already used");
+        // on createGame we want the data to be exactly the same as the one we signed
+        _allowed = keccak256(_permissionData.limitData) == keccak256(_data);
+        if (!_allowed) revert("CounterGameSystem::checkAndUpdateLimit: not-authorized data");
+        oneTimePermission[_permissionId] = true;
+
+      } else if (_functionSignature == ICounterGameSystem.acceptGame.selector) {
+        if (oneTimePermission[_permissionId]) revert("CounterGameSystem::checkAndUpdateLimit: permission already used");
+        _allowed = keccak256(_permissionData.limitData) == keccak256(_data);
+        if (!_allowed) revert("CounterGameSystem::checkAndUpdateLimit: not-authorized data");
+        oneTimePermission[_permissionId] = true;
+
+      } else if (_functionSignature == ICounterGameSystem.increment.selector) {
+        _allowed = keccak256(_permissionData.limitData) == keccak256(_data);
+      } else {
+        revert("CounterGameSystem::checkAndUpdateLimit: unknown function");
+      }
     }
     
     function createGame(address _player1, address _player2) external returns (bytes32 _gameId) {
       _gameId = getUniqueEntity();
+      if (_player1 == address(0) || _player2 == address(0)) revert("CounterGameSystem::createGame: invalid players");
+      if (_player1 == _player2) revert("CounterGameSystem::createGame: players must be different");
       CounterGame.set(_gameId, 
         CounterGameData({
           player1: _player1,
@@ -40,7 +70,6 @@ contract CounterGameSystem is LimitCheckerSystem {
     function acceptGame(bytes32 _gameId) external returns (bool _playerConsent) {
       CounterGameData memory _counterGameData = CounterGame.get(_gameId);
       if (_counterGameData.winner != address(0)) revert("Game is over");
-
 
       if(_msgSender() == _counterGameData.player1) {
         CounterGame.setPlayer1Consent(_gameId, true);
