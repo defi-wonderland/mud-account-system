@@ -57,8 +57,8 @@ export const Profile = ({
       <h1>Profile Section</h1>
       <br />
       <br />
-      <button onClick={connect} disabled={!signer}>
-        {signer ? "Connected" : "Connect"}
+      <button onClick={connect} disabled={!signerAddress}>
+        {signerAddress ? "Connected" : "Connect"}
       </button>
       <br />
       <br />
