@@ -1,32 +1,44 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-struct PermissionData {
-  IAuthController authController;
-  address client;
-  address world;
-  address system;
-//   bytes4 functionSig;  // Pretty sure we don't need these
-//   bytes functionParams; // Pretty sure we don't need these
-  ILimitChecker limitChecker;
-  bytes limitData;
+
+interface IAccount {
+    /**
+     * @notice PermissionData is a struct that contains the permissions given from a sender to a client.
+     * @param authController The address of the auth controller.
+     * @param client The address of the client.
+     * @param world The address of the world.
+     * @param system The address of the system.
+     * @param limitChecker The address of the limit checker.
+     * @param limitData The limit data.
+     */
+    struct PermissionData {
+        IAuthController authController;
+        address client;
+        address world;
+        address system;
+        ILimitChecker limitChecker;
+        bytes limitData;
+    }
+
+    struct AuthData {
+        bytes32 signature;
+        bytes32 nonce;
+    }
 }
 
-struct AuthData {
-  bytes32 signature;
-  bytes32 nonce;
-}
+
 
 interface IAuthController {
-    function auth(PermissionData calldata _permissionData, AuthData calldata _authData) external returns (bool _authorized);
+    function auth(IAccount.PermissionData calldata _permissionData, IAccount.AuthData calldata _authData) external returns (bool _authorized);
 }
 
 interface ILimitChecker {
-    function check(uint256 _permissionId, PermissionData calldata _permissionData, bytes calldata _data) external;
+    function check(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes calldata _data) external;
 
 }
 
-contract Account {
+contract Account is IAccount {
 
     address public owner;
     
