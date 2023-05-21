@@ -2,9 +2,9 @@
 pragma solidity >=0.8.0;
 
 import { Counter } from "../codegen/Tables.sol";
-import { AccountPermissionSystem } from "./AccountPermissionsSystemAbstract.sol";
+import { System } from "@latticexyz/world/src/System.sol";
 
-contract IncrementSystem is AccountPermissionSystem {
+contract IncrementSystem is System {
   function increment() public returns (uint32) {
     uint32 counter = Counter.get();
     uint32 newValue = counter + 1;

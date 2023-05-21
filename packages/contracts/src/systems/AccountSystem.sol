@@ -8,7 +8,6 @@ import { IAccountFactory } from "../account/AccountFactory.sol";
 contract AccountSystem is System {
 
   address public ACCOUNT_FACTORY;
-  address public OWNER;
 
   function setAccountFactory(address _accountFactory) public {
     require(ACCOUNT_FACTORY == address(0), "AccountSystem: already set");
