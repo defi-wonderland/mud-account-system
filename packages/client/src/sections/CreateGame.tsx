@@ -5,9 +5,10 @@ import { Has, getComponentValueStrict } from "@latticexyz/recs";
 
 interface CreateGameProps {
   signMessage: (message: string) => Promise<string | undefined>;
+  account: string;
 }
 
-export const CreateGame = ({ signMessage }: CreateGameProps) => {
+export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
   const [player1, setPlayer1] = useState<string>("");
   const [player2, setPlayer2] = useState<string>("");
 

@@ -13,6 +13,7 @@ export const useProvider = () => {
   const [state, setState] = useState<ProviderState>({
     gameProvider: new providers.JsonRpcProvider(),
   });
+  const [account, setAccount] = useState("");
 
   const { provider, signer, signerAddress, chainId, gameProvider } = state;
 
@@ -47,5 +48,7 @@ export const useProvider = () => {
     connect,
     signMessage,
     gameProvider,
+    account,
+    setAccount,
   };
 };

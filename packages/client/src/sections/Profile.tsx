@@ -8,26 +8,27 @@ import { useAccountSystem } from "../hooks";
 import { useMUD } from "../MUDContext";
 
 interface ProfileProps {
-  signer?: string;
   signerAddress?: string;
   burner?: string;
   chainId?: number;
   connect?: () => void;
+  account: string;
+  setAccount: (account: string) => void;
 }
 
 export const Profile = ({
   signerAddress,
   burner,
-  signer,
   chainId,
   connect,
+  account,
+  setAccount,
 }: ProfileProps) => {
   const {
     systemCalls: { createAccount },
     components: { AccountFactorySingleton },
   } = useMUD();
   const { getAccounts } = useAccountSystem();
-  const [accounts, setAccounts] = useState<string[]>([]);
   const accountSystemId = useEntityQuery([Has(AccountFactorySingleton)]);
   const burnerWallet = new Wallet(getBurnerWallet().value);
 
@@ -41,7 +42,7 @@ export const Profile = ({
       ).value;
 
       getAccounts(accountFactory, burner, "0").then((address) => {
-        setAccounts([...accounts, address]);
+        setAccount(address);
       });
     } catch (error) {
       console.log("error gettting AccountSystem");
@@ -71,7 +72,7 @@ export const Profile = ({
       <br />
       <br />
       <p>Signer Accounts:</p>
-      <p>Account contract: {accounts[0] || ""}</p>
+      <p>Account contract: {account || ""}</p>
       <br />
     </div>
   );
