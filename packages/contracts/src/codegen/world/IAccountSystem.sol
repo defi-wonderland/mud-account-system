@@ -9,4 +9,8 @@ interface IAccountSystem {
   function createAccount() external returns (address _account);
 
   function ownerAccounts(address _owner, uint256 _index) external view returns (address);
+
+  function getAuthController() external view returns (address);
+
+  function getAccountSystemAddress() external view returns (address _accountSystemAddress);
 }

@@ -2,12 +2,17 @@ import { useState } from "react";
 import { useMUD } from "../MUDContext";
 import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValueStrict } from "@latticexyz/recs";
-import { useAccountSystem } from "../hooks";
+import { useAccountSystem, useProvider } from "../hooks";
 
 interface CreateGameProps {
   signMessage: (message: string) => Promise<string | undefined>;
   account: string;
 }
+
+export type ActionEnv = {
+  accountSystem: ReturnType<typeof useAccountSystem>;
+  provider: ReturnType<typeof useProvider>;
+};
 
 export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
   const [player1, setPlayer1] = useState<string>("");
@@ -17,9 +22,12 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
     systemCalls: { createGame },
     components: { CounterGame },
   } = useMUD();
-
-  const { sendThrough } = useAccountSystem();
-  const sendThroughAccount = sendThrough(account);
+  
+  const actionEnv: ActionEnv = {
+    accountSystem: useAccountSystem(),
+    provider: useProvider(),
+  };
+  
 
   const games = useEntityQuery([Has(CounterGame)]);
   return (
@@ -36,7 +44,7 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
       <br />
       <button
         onClick={async () => {
-          await createGame(await sendThrough(account), player1, player2);
+          await createGame(actionEnv, player1, player2);
         }}
       >
         Create Game

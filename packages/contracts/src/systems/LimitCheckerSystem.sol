@@ -18,7 +18,7 @@ interface ILimitCheckerSystem {
         external
         returns (bool _allowed);
     
-    function getPermissionData(bytes calldata _data)
+    function getLimitData(bytes calldata _data)
         external view
         returns (bytes memory _limitData);
 }

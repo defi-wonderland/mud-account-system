@@ -6,7 +6,7 @@ pragma solidity >=0.8.0;
 import { IAccount } from "./../../account/Account.sol";
 
 interface ICounterGameSystem {
-  function getPermissionData(bytes calldata _data) external view returns (bytes memory _limitData);
+  function getLimitData(bytes calldata _data) external view returns (bytes memory _limitData);
 
   function checkAndUpdateLimit(
     uint256 _permissionId,
@@ -19,4 +19,6 @@ interface ICounterGameSystem {
   function acceptGame(bytes32 _gameId) external returns (bool _playerConsent);
 
   function increment(bytes32 _gameId, string calldata _message) external returns (bool _playerWon);
+
+  function getCounterGameSystemAddress() external view returns (address _counterGameSystemAddress);
 }

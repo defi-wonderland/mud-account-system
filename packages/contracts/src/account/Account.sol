@@ -10,7 +10,6 @@ interface IAccount {
      * @param authController The address of the auth controller.
      * @param client The address of the client.
      * @param world The address of the world.
-     * @param system The address of the system.
      * @param limitChecker The address of the limit checker.
      * @param limitData The limit data.
      */
@@ -18,7 +17,6 @@ interface IAccount {
         IAuthController authController;
         address client;
         address world;
-        address system;
         ILimitCheckerSystem limitChecker;
         bytes limitData;
     }

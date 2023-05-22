@@ -23,7 +23,7 @@ contract CounterGameSystem is LimitCheckerSystem {
     mapping(uint256 => bool) public oneTimePermission;
 
 
-    function getPermissionData(
+    function getLimitData(
       bytes calldata _data
     ) external view returns (bytes memory _limitData) {
 
@@ -36,7 +36,7 @@ contract CounterGameSystem is LimitCheckerSystem {
       } else if (_functionSignature == ICounterGameSystem.increment.selector) {
         _limitData = _data; // _data = _functionSignature + _gameId
       } else {
-        revert("CounterGameSystem::getPermissionData: unknown function");
+        revert("CounterGameSystem::getLimitData: unknown function");
       }
     }
 
@@ -122,6 +122,11 @@ contract CounterGameSystem is LimitCheckerSystem {
         CounterGame.setWinner(_gameId, _msgSender());
         CounterGame.setMessage(_gameId, _message);
       }
+    }
+
+
+    function getCounterGameSystemAddress() external view returns (address _counterGameSystemAddress) {
+      _counterGameSystemAddress = address(this);
     }
 
 
