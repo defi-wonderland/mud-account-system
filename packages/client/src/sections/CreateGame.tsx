@@ -19,7 +19,6 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
   } = useMUD();
 
   const { sendThrough } = useAccountSystem();
-  const sendThroughAccount = sendThrough(account);
 
   const games = useEntityQuery([Has(CounterGame)]);
   return (

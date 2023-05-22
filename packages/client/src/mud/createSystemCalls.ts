@@ -9,6 +9,11 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, worldContract }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
+  const createAccount = async () => {
+    const tx = await worldSend("createAccount", []);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
   const createGame = async (
     sendThroughAccount: any,
     firstAddress: string,
@@ -40,13 +45,17 @@ export function createSystemCalls(
     return getComponentValue(CounterGame, singletonEntity);
   };
 
-  const createAccount = async () => {
-    const tx = await worldSend("createAccount", []);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-  };
-
-  const increment = async (gameId: string, message: string) => {
-    const tx = await worldSend("increment", [gameId, message]);
+  const increment = async (
+    sendThroughAccount: any,
+    gameId: string,
+    message: string
+  ) => {
+    const txData = await worldContract.populateTransaction.increment(
+      gameId,
+      message
+    );
+    const permissionId = "420"; // TODO Get correct permission ID
+    const tx = await sendThroughAccount(permissionId, txData?.data);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };
