@@ -4,17 +4,12 @@ import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValueStrict } from "@latticexyz/recs";
 import { useAccountSystem, useProvider } from "../hooks";
 
-interface CreateGameProps {
-  signMessage: (message: string) => Promise<string | undefined>;
-  account: string;
-}
-
 export type ActionEnv = {
   accountSystem: ReturnType<typeof useAccountSystem>;
   provider: ReturnType<typeof useProvider>;
 };
 
-export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
+export const CreateGame = () => {
   const [player1, setPlayer1] = useState<string>("");
   const [player2, setPlayer2] = useState<string>("");
 
@@ -22,13 +17,14 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
     systemCalls: { createGame },
     components: { CounterGame },
   } = useMUD();
-  
+
   const actionEnv: ActionEnv = {
     accountSystem: useAccountSystem(),
     provider: useProvider(),
   };
-  
+
   const games = useEntityQuery([Has(CounterGame)]);
+
   return (
     <div className="section">
       <h1>Create Game Section</h1>

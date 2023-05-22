@@ -4,7 +4,7 @@ import { useProvider } from "./hooks";
 import { CreateGame, Game, JoinGame, Profile } from "./sections";
 
 export const App = () => {
-  const { connect, signMessage, signerAddress, chainId, account, setAccount } =
+  const { connect, signerAddress, chainId, account, setAccount } =
     useProvider();
 
   return (
@@ -20,10 +20,10 @@ export const App = () => {
       {account && (
         <>
           {/* Game Creation Section */}
-          <CreateGame signMessage={signMessage} account={account} />
+          <CreateGame />
 
           {/* Join Game Section */}
-          <JoinGame signMessage={signMessage} />
+          <JoinGame />
 
           {/* Game Section */}
           <Game />

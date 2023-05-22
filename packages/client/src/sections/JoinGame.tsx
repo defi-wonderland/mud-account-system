@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { useMUD } from "../MUDContext";
-import { ethers } from "ethers";
+import { ActionEnv } from "./CreateGame";
+import { useAccountSystem, useProvider } from "../hooks";
 
-interface JoinGameProps {
-  signMessage: (message: string) => Promise<string | undefined>;
-}
-
-export const JoinGame = ({ signMessage }: JoinGameProps) => {
-  const [gameId, setGameId] = useState<string>(
-    "0x0000000000000000000000000000000000000000000000000000000000000001"
-  );
+export const JoinGame = () => {
+  const [gameId, setGameId] = useState<string>("1");
 
   const {
     systemCalls: { acceptGame },
   } = useMUD();
+
+  const actionEnv: ActionEnv = {
+    accountSystem: useAccountSystem(),
+    provider: useProvider(),
+  };
+
+  const handleId = (id: string) => {
+    return `0x000000000000000000000000000000000000000000000000000000000000000${id}`;
+  };
 
   return (
     <div className="section">
@@ -23,7 +27,9 @@ export const JoinGame = ({ signMessage }: JoinGameProps) => {
       <p>game key:</p>
       <input value={gameId} onChange={(e) => setGameId(e.target.value)} />
       <br />
-      <button onClick={async () => await acceptGame(gameId)}>
+      <button
+        onClick={async () => await acceptGame(actionEnv, handleId(gameId))}
+      >
         Accept Game
       </button>
     </div>
