@@ -1,0 +1,1710 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IAuthController",
+              "name": "authController",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "client",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "world",
+              "type": "address"
+            },
+            {
+              "internalType": "contract ILimitCheckerSystem",
+              "name": "limitChecker",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "limitData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct IAccount.PermissionData",
+          "name": "_permissionData",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "auth",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "_authorized",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IAuthController",
+              "name": "authController",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "client",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "world",
+              "type": "address"
+            },
+            {
+              "internalType": "contract ILimitCheckerSystem",
+              "name": "limitChecker",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "limitData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct IAccount.PermissionData",
+          "name": "_permissionData",
+          "type": "tuple"
+        }
+      ],
+      "name": "getPermissionDataHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_permissionDataHash",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "auth((address,address,address,address,bytes),bytes)": "0998d8de",
+    "getPermissionDataHash((address,address,address,address,bytes))": "22000346"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"contract IAuthController\",\"name\":\"authController\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"client\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"world\",\"type\":\"address\"},{\"internalType\":\"contract ILimitCheckerSystem\",\"name\":\"limitChecker\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"limitData\",\"type\":\"bytes\"}],\"internalType\":\"struct IAccount.PermissionData\",\"name\":\"_permissionData\",\"type\":\"tuple\"},{\"internalType\":\"bytes\",\"name\":\"_signature\",\"type\":\"bytes\"}],\"name\":\"auth\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"_authorized\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"contract IAuthController\",\"name\":\"authController\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"client\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"world\",\"type\":\"address\"},{\"internalType\":\"contract ILimitCheckerSystem\",\"name\":\"limitChecker\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"limitData\",\"type\":\"bytes\"}],\"internalType\":\"struct IAccount.PermissionData\",\"name\":\"_permissionData\",\"type\":\"tuple\"}],\"name\":\"getPermissionDataHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"_permissionDataHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"auth((address,address,address,address,bytes),bytes)\":{\"params\":{\"_permissionData\":\"The permission data.\",\"_signature\":\"The signature.\"},\"returns\":{\"_authorized\":\"True if the sender is authorized or not.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"auth((address,address,address,address,bytes),bytes)\":{\"notice\":\"function that checks if the given permission data is authorized by the given auth data.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/authController/AuthController.sol\":\"IAuthController\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":3000},\"remappings\":[\":@latticexyz/=node_modules/@latticexyz/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=node_modules/ds-test/src/\",\":forge-std/=node_modules/forge-std/src/\"]},\"sources\":{\"node_modules/@latticexyz/schema-type/src/solidity/SchemaType.sol\":{\"keccak256\":\"0xe881f296ba0fe410faa6395ee4a65b9bf154947aebc6aa323d41a0484504221e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba7f706464d14365ff751936ba96f79f200df7bcd9d9f8abccd0b41387ca7967\",\"dweb:/ipfs/QmTiHgH3ZM2oJoqsbNs3iwwPFNYFNU7m8co87woxRLaUZ6\"]},\"node_modules/@latticexyz/store/src/Bytes.sol\":{\"keccak256\":\"0xdfcc270654744ea06ff29bf4f608db9f2279685ee14c4ded90815fb478ba6d1f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e78669b369089f28826893e9738a1060af3ad5917b6954b20b723945e0d1d47a\",\"dweb:/ipfs/QmQhnwV2TMbdaCgNjUvgWn4qQQCggRQZv3TLynVRRtgr2o\"]},\"node_modules/@latticexyz/store/src/IStore.sol\":{\"keccak256\":\"0xd9bdb90c4f9b19380e3a348bc9f6333c07496df01fa452a6e93b930f830087b6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://eefbdbfaa5f7173b58d4c447ca64ede31b73591d8fec64a38be53c7bdfcd6163\",\"dweb:/ipfs/QmdxQxfdpUSf6xkQ5z2qLGaphinBH6wVNbRRBLbo88r6Zs\"]},\"node_modules/@latticexyz/store/src/IStoreErrors.sol\":{\"keccak256\":\"0xc001ac6dca3e41389da8d6e4a7305e84f70d5df9fd631a72b974b6fc44fb753a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://989b7e7146c5bfbf7468b7dea0432c3119a033a337702d7c063ac09654eb5f43\",\"dweb:/ipfs/QmVcTf9YNPb8QhZtU3WTSjezX1XvKRVTRiXGcqqMH8LD7T\"]},\"node_modules/@latticexyz/store/src/Memory.sol\":{\"keccak256\":\"0x706d0d1ddd874bdcd4f73422721420b32939c1c96d4718db8b1b8e9f78bfa76c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2ed8c858fa9c3756cb70cb92bb860e0ae6429eb62551b502fb4a883e1344eb42\",\"dweb:/ipfs/QmezLAADZmFj8bKS9dccTQYHcpy4g8PSZ75AuvppSwjrW7\"]},\"node_modules/@latticexyz/store/src/PackedCounter.sol\":{\"keccak256\":\"0x09e48063f57cee0a723812f0e8e7e95622064d8d6b7e238d634efb21738c7b85\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ef32c0c6bf7956bed5f7c1da0362e2fa725882d9163e8b2113e8019ec1bcc8ed\",\"dweb:/ipfs/QmRrqWrH3f14yHn9NTUFpLkCAHrcfVZCJHPREySHMdaBiH\"]},\"node_modules/@latticexyz/store/src/Schema.sol\":{\"keccak256\":\"0xe5329478d0a81014cd4a07f482a4929e32b7086dbbed3c7b6affd9fb6162a950\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e0b4481576081fd47a0d82294d7024b3103571f4b11282123a2e2a58540a1af4\",\"dweb:/ipfs/QmdKTreXa3gqhi92NvVBqvs3uPasA9RvgzvUj4LWte5uMZ\"]},\"node_modules/@latticexyz/store/src/Slice.sol\":{\"keccak256\":\"0x14879c6c859cad89451616dcee1ab6222fd565849809b89407de48f0c1a01133\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://924caa18aa0e656a295da626d586dfb120bbea321123010462b0640c7e0c52c4\",\"dweb:/ipfs/QmNueqwy4g5mwq9kXaPzue8X2mqyFjH2P2AFi3pNN3WTAt\"]},\"node_modules/@latticexyz/store/src/Storage.sol\":{\"keccak256\":\"0x2ccca6556a3c2595479914d30efa84fc3b61cff30036522714a0ef99289ee2af\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9d169812a4159454be580d42fedee63d121646102e6462fe3b2ea905b69bee07\",\"dweb:/ipfs/QmXiKsMeN4nsdiqDwhuWfb4J3UF57B4rkuwkfbrRXA6vtb\"]},\"node_modules/@latticexyz/store/src/StoreCore.sol\":{\"keccak256\":\"0xb4d4436c78cde88619f842be3c0d1770c45ad5f1523887e8236180b231fadb57\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c13ff54ec101fb9fd2463d3894fa1dfbed680986963864e7204b207221519c55\",\"dweb:/ipfs/QmTW62YAqHRPPnKGcV8vZR875XzAJbvD8ey4AtoS36eC1x\"]},\"node_modules/@latticexyz/store/src/StoreSwitch.sol\":{\"keccak256\":\"0x012199fd51d775d6a3dba1cd0b02379e25f0a53f96dd7c7abf4bbfaa571b27bc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d67579506893f72839108cdb092ddafc293cc378e723d529996f577034842e31\",\"dweb:/ipfs/QmbEQbaxpegizVk8tA5gmo2DF7J84kEMpGrgdGzwKecyWH\"]},\"node_modules/@latticexyz/store/src/TableId.sol\":{\"keccak256\":\"0x8c55662dc4f66be577bb96bfdcb65d95fe1323c733443ab749cb9ec1e58f0a6e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://209ed70247c1c64b56d9b21f2902e67e0994cb89ac19be8e1553dac9d978fb76\",\"dweb:/ipfs/QmVLYNDwBL3GZidDpwqFZx916zoGZ5tWVztxKQFEEzVybP\"]},\"node_modules/@latticexyz/store/src/Utils.sol\":{\"keccak256\":\"0x426216bfa1c0e70640787007a6e39257cf09e586fd04831ea4fb3dd9c5768fc4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://38e657fa9cfaebe39477eaff27d1ad4d7eeaf0c0058539d2ec7e6976d93df4f4\",\"dweb:/ipfs/QmRuaxqRjUrHHC2ZyTnpmq6sfrWGCDh91B6F5chFAToU6U\"]},\"node_modules/@latticexyz/store/src/codegen/Tables.sol\":{\"keccak256\":\"0x2eba8dd4e9f07b505438a2fb744ac7da26b1f6321b8a88054e9442db947ab435\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bd1a60dfff209a3f1df84aeb5d7f8a5cf0419c19be63bac428df0a779d5ba437\",\"dweb:/ipfs/QmaHem2GMJPHrtr1f7fk1ThTBESdYipmBxEEoKT1DBRmsd\"]},\"node_modules/@latticexyz/store/src/codegen/tables/Callbacks.sol\":{\"keccak256\":\"0x17506500e0fdd4bd3492a09e4f536b05757ae605751e0a5278e8e3ac0f1a5b84\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d36cbe9eb1895ac3a88ad9366d8d4de10e154e8b4fbb70a3f0c959888a089be1\",\"dweb:/ipfs/QmcgnjXefmKQs2diUfxRubovVQvoqjP84JXnn6YqtbR3pn\"]},\"node_modules/@latticexyz/store/src/codegen/tables/Hooks.sol\":{\"keccak256\":\"0xcc32a9d83cc79d3ab398c8b9181c56b24d9cceac7fb7435720e3d6c82318b190\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e1ed26494bf9695c455e7a54e224f76feb5f643c041a4ffb43091c6705e5d4d5\",\"dweb:/ipfs/QmTuKASQqPkK8x9tLVKW6G8VzD665xqTZV8YF1EwodYazx\"]},\"node_modules/@latticexyz/store/src/codegen/tables/Mixed.sol\":{\"keccak256\":\"0x212891acd187755e79b73bac2370f869e7c3c9f9c6ad5ee2e7a578fe79322814\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e199a05d6e8e0b2735277b1f8d34c1977bfbe7564786ec172596bdfc309b2c76\",\"dweb:/ipfs/QmeeXPr2kiKHAXrxmK4cZnpRDDJC4cDrb73tj69Z79XuUb\"]},\"node_modules/@latticexyz/store/src/codegen/tables/StoreMetadata.sol\":{\"keccak256\":\"0x360cc0f613011df7d7e1dc4ef5648a17cdec9574df0c01dfbce9b5ef68556975\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://17c9bbcdb1affddf1031c1f850b82a06e7e90b368919e41ac4be8756537bbc1c\",\"dweb:/ipfs/QmcJ4Nk3gWToADf1hD2A5agByGVU3DwxBJk5jQY58jL2jw\"]},\"node_modules/@latticexyz/store/src/codegen/tables/Vector2.sol\":{\"keccak256\":\"0xfcd9fda67bc9c5ea55866f08f53e091b6a8ba8627da6710b8864c1fee1b97e16\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4c92456f8b7186b9401c26471148e6e048cfaedc81f2703e929011639d3843ae\",\"dweb:/ipfs/Qmf65ygAksGN51dpeJuFcBbcppaJFPARPwqnEU5JUFPgkm\"]},\"node_modules/@latticexyz/store/src/tightcoder/DecodeSlice.sol\":{\"keccak256\":\"0xe760dfb8ff20cfb44eee6a5f03ac84abbc91382fca2e36c88c92046e6b3a66e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://75eb4b355c547ffee62031d8dfb80844fa31fa4460543a088278083662dc4c12\",\"dweb:/ipfs/Qmf8sRcrjJ6hEQ8TPwwe6KcXcE2MPw7Juvf7fKBZ1fBCt6\"]},\"node_modules/@latticexyz/store/src/tightcoder/EncodeArray.sol\":{\"keccak256\":\"0x046f0a2dc543c7a80be91ff26b19990a10fbe73cb605f4944af38e04326a43df\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d94f038e70179571d2aed3cbe03e812ce79a471372171fb78e8189bebd7ae1ac\",\"dweb:/ipfs/QmUV4bkaEc8hefLpLRaGwmu4WZsqRLE9e6R8UdaKPExb6p\"]},\"node_modules/@latticexyz/store/src/tightcoder/TightCoder.sol\":{\"keccak256\":\"0xff0278a4e35174bbed8a38dad8ae7506f725bfe95f0b7c13829c353d68dd25dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://26249ec0c2fa3a3430a2f8edbfc5cd678e34ea1cf1d7490ecaf1e925c976eb85\",\"dweb:/ipfs/QmUpkhr5kFiDKc7rZ2z5HcTf5PkrWVJu5sa31tYv911cPL\"]},\"node_modules/@latticexyz/world/src/System.sol\":{\"keccak256\":\"0xf1342c8461adb4c5821c1ca106a67ba34402b36265fa63bf766eed937bd92bf9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ea41f96a27a26d56d62824e007b3b0234d44fcd94361e5c8f40fdb334cbf444b\",\"dweb:/ipfs/QmRfj4iS5Lu9V4e47wsPQy4op1qQ6hqaJpERLB5EyzqW38\"]},\"node_modules/@latticexyz/world/src/WorldContext.sol\":{\"keccak256\":\"0xd44a445ff07ac1551e5a8f17450381664ecf68dcb1c89fee8fb11b9b73c9cd7b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1235cc5636743b9afbb313676fc4c84ac5607142c758b0bfc59107aff79ed30c\",\"dweb:/ipfs/QmUtTUFjxKy7GtQC1Uzn6B2bRNZpcASFySPDjd16T47Rcz\"]},\"node_modules/@openzeppelin/contracts/utils/Strings.sol\":{\"keccak256\":\"0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8c969013129ba9e651a20735ef659fef6d8a1139ea3607bd4b26ddea2d645634\",\"dweb:/ipfs/QmVhVa6LGuzAcB8qgDtVHRkucn4ihj5UZr8xBLcJkP6ucb\"]},\"node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol\":{\"keccak256\":\"0xda898fa084aa1ddfdb346e6a40459e00a59d87071cce7c315a46d648dd71d0ba\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ce501a941f4aa1555c04dabb5e07992503bb6a9b32ff8f7cdcefdb4a742210cb\",\"dweb:/ipfs/QmeScPrUpdrGYs9BytV3Z5ZWJcBXtuAgCW4BLHua4xFUxx\"]},\"node_modules/@openzeppelin/contracts/utils/math/Math.sol\":{\"keccak256\":\"0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://33bbf48cc069be677705037ba7520c22b1b622c23b33e1a71495f2d36549d40b\",\"dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz\"]},\"node_modules/forge-std/src/console.sol\":{\"keccak256\":\"0x91d5413c2434ca58fd278b6e1e79fd98d10c83931cc2596a6038eee4daeb34ba\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://91ccea707361e48b9b7a161fe81f496b9932bc471e9c4e4e1e9c283f2453cc70\",\"dweb:/ipfs/QmcB66sZhQ6Kz7MUHcLE78YXRUZxoZnnxZjN6yATsbB2ec\"]},\"src/account/Account.sol\":{\"keccak256\":\"0x60bedca4b383a2d07a1a2f85b586814a1abceed8ef63f37d4ddc65f3e90f82d7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7bc931d9ca6829b1d9afad8677908dd7df8078895b0a633a8ceada37e590a61d\",\"dweb:/ipfs/QmTw9kRb5yrdtqAA7nSKRuqwR82Fdv1Y5gmtHyiYgXDH3U\"]},\"src/authController/AuthController.sol\":{\"keccak256\":\"0x307a5cd387fedac2f8f2cbdc210c2a09d3f8908955168f5e67cf22aa3774e14d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://75b727369ed4b2fabb4addee65faff4f703f2c6ca41bdb098a99836aba6991ef\",\"dweb:/ipfs/QmaFcQd88wNDyCkCASjFfL8yWeBUUWTg29gKBzWGRhEDZm\"]},\"src/systems/LimitCheckerSystem.sol\":{\"keccak256\":\"0xf76b087f685f8ba2ec936739c846e6a1ec4549e1d327e3da381a6b1b823df2c3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://38f0bb8dbc52b079108bc6de2278bec23d21e128e28bce3f4232f668336a558e\",\"dweb:/ipfs/QmYGV8k8rKPCUpHCtAc4swGVe1Zned13cdxD1VjWjbUUm2\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.13+commit.abaa5c0e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "struct IAccount.PermissionData",
+              "name": "_permissionData",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "contract IAuthController",
+                  "name": "authController",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "client",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "world",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract ILimitCheckerSystem",
+                  "name": "limitChecker",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "limitData",
+                  "type": "bytes"
+                }
+              ]
+            },
+            {
+              "internalType": "bytes",
+              "name": "_signature",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "auth",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "_authorized",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "struct IAccount.PermissionData",
+              "name": "_permissionData",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "contract IAuthController",
+                  "name": "authController",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "client",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "world",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract ILimitCheckerSystem",
+                  "name": "limitChecker",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "limitData",
+                  "type": "bytes"
+                }
+              ]
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getPermissionDataHash",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "_permissionDataHash",
+              "type": "bytes32"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "auth((address,address,address,address,bytes),bytes)": {
+            "params": {
+              "_permissionData": "The permission data.",
+              "_signature": "The signature."
+            },
+            "returns": {
+              "_authorized": "True if the sender is authorized or not."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "auth((address,address,address,address,bytes),bytes)": {
+            "notice": "function that checks if the given permission data is authorized by the given auth data."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@latticexyz/=node_modules/@latticexyz/",
+        ":@openzeppelin/=node_modules/@openzeppelin/",
+        ":ds-test/=node_modules/ds-test/src/",
+        ":forge-std/=node_modules/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 3000
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/authController/AuthController.sol": "IAuthController"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "node_modules/@latticexyz/schema-type/src/solidity/SchemaType.sol": {
+        "keccak256": "0xe881f296ba0fe410faa6395ee4a65b9bf154947aebc6aa323d41a0484504221e",
+        "urls": [
+          "bzz-raw://ba7f706464d14365ff751936ba96f79f200df7bcd9d9f8abccd0b41387ca7967",
+          "dweb:/ipfs/QmTiHgH3ZM2oJoqsbNs3iwwPFNYFNU7m8co87woxRLaUZ6"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Bytes.sol": {
+        "keccak256": "0xdfcc270654744ea06ff29bf4f608db9f2279685ee14c4ded90815fb478ba6d1f",
+        "urls": [
+          "bzz-raw://e78669b369089f28826893e9738a1060af3ad5917b6954b20b723945e0d1d47a",
+          "dweb:/ipfs/QmQhnwV2TMbdaCgNjUvgWn4qQQCggRQZv3TLynVRRtgr2o"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/IStore.sol": {
+        "keccak256": "0xd9bdb90c4f9b19380e3a348bc9f6333c07496df01fa452a6e93b930f830087b6",
+        "urls": [
+          "bzz-raw://eefbdbfaa5f7173b58d4c447ca64ede31b73591d8fec64a38be53c7bdfcd6163",
+          "dweb:/ipfs/QmdxQxfdpUSf6xkQ5z2qLGaphinBH6wVNbRRBLbo88r6Zs"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/IStoreErrors.sol": {
+        "keccak256": "0xc001ac6dca3e41389da8d6e4a7305e84f70d5df9fd631a72b974b6fc44fb753a",
+        "urls": [
+          "bzz-raw://989b7e7146c5bfbf7468b7dea0432c3119a033a337702d7c063ac09654eb5f43",
+          "dweb:/ipfs/QmVcTf9YNPb8QhZtU3WTSjezX1XvKRVTRiXGcqqMH8LD7T"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Memory.sol": {
+        "keccak256": "0x706d0d1ddd874bdcd4f73422721420b32939c1c96d4718db8b1b8e9f78bfa76c",
+        "urls": [
+          "bzz-raw://2ed8c858fa9c3756cb70cb92bb860e0ae6429eb62551b502fb4a883e1344eb42",
+          "dweb:/ipfs/QmezLAADZmFj8bKS9dccTQYHcpy4g8PSZ75AuvppSwjrW7"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/PackedCounter.sol": {
+        "keccak256": "0x09e48063f57cee0a723812f0e8e7e95622064d8d6b7e238d634efb21738c7b85",
+        "urls": [
+          "bzz-raw://ef32c0c6bf7956bed5f7c1da0362e2fa725882d9163e8b2113e8019ec1bcc8ed",
+          "dweb:/ipfs/QmRrqWrH3f14yHn9NTUFpLkCAHrcfVZCJHPREySHMdaBiH"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Schema.sol": {
+        "keccak256": "0xe5329478d0a81014cd4a07f482a4929e32b7086dbbed3c7b6affd9fb6162a950",
+        "urls": [
+          "bzz-raw://e0b4481576081fd47a0d82294d7024b3103571f4b11282123a2e2a58540a1af4",
+          "dweb:/ipfs/QmdKTreXa3gqhi92NvVBqvs3uPasA9RvgzvUj4LWte5uMZ"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Slice.sol": {
+        "keccak256": "0x14879c6c859cad89451616dcee1ab6222fd565849809b89407de48f0c1a01133",
+        "urls": [
+          "bzz-raw://924caa18aa0e656a295da626d586dfb120bbea321123010462b0640c7e0c52c4",
+          "dweb:/ipfs/QmNueqwy4g5mwq9kXaPzue8X2mqyFjH2P2AFi3pNN3WTAt"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Storage.sol": {
+        "keccak256": "0x2ccca6556a3c2595479914d30efa84fc3b61cff30036522714a0ef99289ee2af",
+        "urls": [
+          "bzz-raw://9d169812a4159454be580d42fedee63d121646102e6462fe3b2ea905b69bee07",
+          "dweb:/ipfs/QmXiKsMeN4nsdiqDwhuWfb4J3UF57B4rkuwkfbrRXA6vtb"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/StoreCore.sol": {
+        "keccak256": "0xb4d4436c78cde88619f842be3c0d1770c45ad5f1523887e8236180b231fadb57",
+        "urls": [
+          "bzz-raw://c13ff54ec101fb9fd2463d3894fa1dfbed680986963864e7204b207221519c55",
+          "dweb:/ipfs/QmTW62YAqHRPPnKGcV8vZR875XzAJbvD8ey4AtoS36eC1x"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/StoreSwitch.sol": {
+        "keccak256": "0x012199fd51d775d6a3dba1cd0b02379e25f0a53f96dd7c7abf4bbfaa571b27bc",
+        "urls": [
+          "bzz-raw://d67579506893f72839108cdb092ddafc293cc378e723d529996f577034842e31",
+          "dweb:/ipfs/QmbEQbaxpegizVk8tA5gmo2DF7J84kEMpGrgdGzwKecyWH"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/TableId.sol": {
+        "keccak256": "0x8c55662dc4f66be577bb96bfdcb65d95fe1323c733443ab749cb9ec1e58f0a6e",
+        "urls": [
+          "bzz-raw://209ed70247c1c64b56d9b21f2902e67e0994cb89ac19be8e1553dac9d978fb76",
+          "dweb:/ipfs/QmVLYNDwBL3GZidDpwqFZx916zoGZ5tWVztxKQFEEzVybP"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/Utils.sol": {
+        "keccak256": "0x426216bfa1c0e70640787007a6e39257cf09e586fd04831ea4fb3dd9c5768fc4",
+        "urls": [
+          "bzz-raw://38e657fa9cfaebe39477eaff27d1ad4d7eeaf0c0058539d2ec7e6976d93df4f4",
+          "dweb:/ipfs/QmRuaxqRjUrHHC2ZyTnpmq6sfrWGCDh91B6F5chFAToU6U"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/Tables.sol": {
+        "keccak256": "0x2eba8dd4e9f07b505438a2fb744ac7da26b1f6321b8a88054e9442db947ab435",
+        "urls": [
+          "bzz-raw://bd1a60dfff209a3f1df84aeb5d7f8a5cf0419c19be63bac428df0a779d5ba437",
+          "dweb:/ipfs/QmaHem2GMJPHrtr1f7fk1ThTBESdYipmBxEEoKT1DBRmsd"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/tables/Callbacks.sol": {
+        "keccak256": "0x17506500e0fdd4bd3492a09e4f536b05757ae605751e0a5278e8e3ac0f1a5b84",
+        "urls": [
+          "bzz-raw://d36cbe9eb1895ac3a88ad9366d8d4de10e154e8b4fbb70a3f0c959888a089be1",
+          "dweb:/ipfs/QmcgnjXefmKQs2diUfxRubovVQvoqjP84JXnn6YqtbR3pn"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/tables/Hooks.sol": {
+        "keccak256": "0xcc32a9d83cc79d3ab398c8b9181c56b24d9cceac7fb7435720e3d6c82318b190",
+        "urls": [
+          "bzz-raw://e1ed26494bf9695c455e7a54e224f76feb5f643c041a4ffb43091c6705e5d4d5",
+          "dweb:/ipfs/QmTuKASQqPkK8x9tLVKW6G8VzD665xqTZV8YF1EwodYazx"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/tables/Mixed.sol": {
+        "keccak256": "0x212891acd187755e79b73bac2370f869e7c3c9f9c6ad5ee2e7a578fe79322814",
+        "urls": [
+          "bzz-raw://e199a05d6e8e0b2735277b1f8d34c1977bfbe7564786ec172596bdfc309b2c76",
+          "dweb:/ipfs/QmeeXPr2kiKHAXrxmK4cZnpRDDJC4cDrb73tj69Z79XuUb"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/tables/StoreMetadata.sol": {
+        "keccak256": "0x360cc0f613011df7d7e1dc4ef5648a17cdec9574df0c01dfbce9b5ef68556975",
+        "urls": [
+          "bzz-raw://17c9bbcdb1affddf1031c1f850b82a06e7e90b368919e41ac4be8756537bbc1c",
+          "dweb:/ipfs/QmcJ4Nk3gWToADf1hD2A5agByGVU3DwxBJk5jQY58jL2jw"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/codegen/tables/Vector2.sol": {
+        "keccak256": "0xfcd9fda67bc9c5ea55866f08f53e091b6a8ba8627da6710b8864c1fee1b97e16",
+        "urls": [
+          "bzz-raw://4c92456f8b7186b9401c26471148e6e048cfaedc81f2703e929011639d3843ae",
+          "dweb:/ipfs/Qmf65ygAksGN51dpeJuFcBbcppaJFPARPwqnEU5JUFPgkm"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/tightcoder/DecodeSlice.sol": {
+        "keccak256": "0xe760dfb8ff20cfb44eee6a5f03ac84abbc91382fca2e36c88c92046e6b3a66e0",
+        "urls": [
+          "bzz-raw://75eb4b355c547ffee62031d8dfb80844fa31fa4460543a088278083662dc4c12",
+          "dweb:/ipfs/Qmf8sRcrjJ6hEQ8TPwwe6KcXcE2MPw7Juvf7fKBZ1fBCt6"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/tightcoder/EncodeArray.sol": {
+        "keccak256": "0x046f0a2dc543c7a80be91ff26b19990a10fbe73cb605f4944af38e04326a43df",
+        "urls": [
+          "bzz-raw://d94f038e70179571d2aed3cbe03e812ce79a471372171fb78e8189bebd7ae1ac",
+          "dweb:/ipfs/QmUV4bkaEc8hefLpLRaGwmu4WZsqRLE9e6R8UdaKPExb6p"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/store/src/tightcoder/TightCoder.sol": {
+        "keccak256": "0xff0278a4e35174bbed8a38dad8ae7506f725bfe95f0b7c13829c353d68dd25dc",
+        "urls": [
+          "bzz-raw://26249ec0c2fa3a3430a2f8edbfc5cd678e34ea1cf1d7490ecaf1e925c976eb85",
+          "dweb:/ipfs/QmUpkhr5kFiDKc7rZ2z5HcTf5PkrWVJu5sa31tYv911cPL"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/world/src/System.sol": {
+        "keccak256": "0xf1342c8461adb4c5821c1ca106a67ba34402b36265fa63bf766eed937bd92bf9",
+        "urls": [
+          "bzz-raw://ea41f96a27a26d56d62824e007b3b0234d44fcd94361e5c8f40fdb334cbf444b",
+          "dweb:/ipfs/QmRfj4iS5Lu9V4e47wsPQy4op1qQ6hqaJpERLB5EyzqW38"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@latticexyz/world/src/WorldContext.sol": {
+        "keccak256": "0xd44a445ff07ac1551e5a8f17450381664ecf68dcb1c89fee8fb11b9b73c9cd7b",
+        "urls": [
+          "bzz-raw://1235cc5636743b9afbb313676fc4c84ac5607142c758b0bfc59107aff79ed30c",
+          "dweb:/ipfs/QmUtTUFjxKy7GtQC1Uzn6B2bRNZpcASFySPDjd16T47Rcz"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/utils/Strings.sol": {
+        "keccak256": "0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a",
+        "urls": [
+          "bzz-raw://8c969013129ba9e651a20735ef659fef6d8a1139ea3607bd4b26ddea2d645634",
+          "dweb:/ipfs/QmVhVa6LGuzAcB8qgDtVHRkucn4ihj5UZr8xBLcJkP6ucb"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
+        "keccak256": "0xda898fa084aa1ddfdb346e6a40459e00a59d87071cce7c315a46d648dd71d0ba",
+        "urls": [
+          "bzz-raw://ce501a941f4aa1555c04dabb5e07992503bb6a9b32ff8f7cdcefdb4a742210cb",
+          "dweb:/ipfs/QmeScPrUpdrGYs9BytV3Z5ZWJcBXtuAgCW4BLHua4xFUxx"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
+        "keccak256": "0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6",
+        "urls": [
+          "bzz-raw://33bbf48cc069be677705037ba7520c22b1b622c23b33e1a71495f2d36549d40b",
+          "dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/forge-std/src/console.sol": {
+        "keccak256": "0x91d5413c2434ca58fd278b6e1e79fd98d10c83931cc2596a6038eee4daeb34ba",
+        "urls": [
+          "bzz-raw://91ccea707361e48b9b7a161fe81f496b9932bc471e9c4e4e1e9c283f2453cc70",
+          "dweb:/ipfs/QmcB66sZhQ6Kz7MUHcLE78YXRUZxoZnnxZjN6yATsbB2ec"
+        ],
+        "license": "MIT"
+      },
+      "src/account/Account.sol": {
+        "keccak256": "0x60bedca4b383a2d07a1a2f85b586814a1abceed8ef63f37d4ddc65f3e90f82d7",
+        "urls": [
+          "bzz-raw://7bc931d9ca6829b1d9afad8677908dd7df8078895b0a633a8ceada37e590a61d",
+          "dweb:/ipfs/QmTw9kRb5yrdtqAA7nSKRuqwR82Fdv1Y5gmtHyiYgXDH3U"
+        ],
+        "license": "MIT"
+      },
+      "src/authController/AuthController.sol": {
+        "keccak256": "0x307a5cd387fedac2f8f2cbdc210c2a09d3f8908955168f5e67cf22aa3774e14d",
+        "urls": [
+          "bzz-raw://75b727369ed4b2fabb4addee65faff4f703f2c6ca41bdb098a99836aba6991ef",
+          "dweb:/ipfs/QmaFcQd88wNDyCkCASjFfL8yWeBUUWTg29gKBzWGRhEDZm"
+        ],
+        "license": "MIT"
+      },
+      "src/systems/LimitCheckerSystem.sol": {
+        "keccak256": "0xf76b087f685f8ba2ec936739c846e6a1ec4549e1d327e3da381a6b1b823df2c3",
+        "urls": [
+          "bzz-raw://38f0bb8dbc52b079108bc6de2278bec23d21e128e28bce3f4232f668336a558e",
+          "dweb:/ipfs/QmYGV8k8rKPCUpHCtAc4swGVe1Zned13cdxD1VjWjbUUm2"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/authController/AuthController.sol",
+    "id": 61154,
+    "exportedSymbols": {
+      "AuthController": [
+        61153
+      ],
+      "ECDSA": [
+        52671
+      ],
+      "IAccount": [
+        60842
+      ],
+      "IAuthController": [
+        61085
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:1693:101",
+    "nodes": [
+      {
+        "id": 61061,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:101",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 61063,
+        "nodeType": "ImportDirective",
+        "src": "57:75:101",
+        "nodes": [],
+        "absolutePath": "node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
+        "file": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 61154,
+        "sourceUnit": 52672,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 61062,
+              "name": "ECDSA",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 52671,
+              "src": "65:5:101",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 61065,
+        "nodeType": "ImportDirective",
+        "src": "133:48:101",
+        "nodes": [],
+        "absolutePath": "src/account/Account.sol",
+        "file": "../account/Account.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 61154,
+        "sourceUnit": 61003,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 61064,
+              "name": "IAccount",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 60842,
+              "src": "141:8:101",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 61085,
+        "nodeType": "ContractDefinition",
+        "src": "183:607:101",
+        "nodes": [
+          {
+            "id": 61076,
+            "nodeType": "FunctionDefinition",
+            "src": "493:156:101",
+            "nodes": [],
+            "documentation": {
+              "id": 61066,
+              "nodeType": "StructuredDocumentation",
+              "src": "215:273:101",
+              "text": " @notice function that checks if the given permission data is authorized by the given auth data.\n @param _permissionData The permission data.\n @param _signature The signature.\n @return _authorized True if the sender is authorized or not."
+            },
+            "functionSelector": "0998d8de",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "auth",
+            "nameLocation": "502:4:101",
+            "parameters": {
+              "id": 61072,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61069,
+                  "mutability": "mutable",
+                  "name": "_permissionData",
+                  "nameLocation": "540:15:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61076,
+                  "src": "507:48:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                    "typeString": "struct IAccount.PermissionData"
+                  },
+                  "typeName": {
+                    "id": 61068,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 61067,
+                      "name": "IAccount.PermissionData",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 60841,
+                      "src": "507:23:101"
+                    },
+                    "referencedDeclaration": 60841,
+                    "src": "507:23:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PermissionData_$60841_storage_ptr",
+                      "typeString": "struct IAccount.PermissionData"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 61071,
+                  "mutability": "mutable",
+                  "name": "_signature",
+                  "nameLocation": "572:10:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61076,
+                  "src": "557:25:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 61070,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "557:5:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "506:77:101"
+            },
+            "returnParameters": {
+              "id": 61075,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61074,
+                  "mutability": "mutable",
+                  "name": "_authorized",
+                  "nameLocation": "636:11:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61076,
+                  "src": "631:16:101",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 61073,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "631:4:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "630:18:101"
+            },
+            "scope": 61085,
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 61084,
+            "nodeType": "FunctionDefinition",
+            "src": "655:133:101",
+            "nodes": [],
+            "functionSelector": "22000346",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPermissionDataHash",
+            "nameLocation": "664:21:101",
+            "parameters": {
+              "id": 61080,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61079,
+                  "mutability": "mutable",
+                  "name": "_permissionData",
+                  "nameLocation": "719:15:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61084,
+                  "src": "686:48:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                    "typeString": "struct IAccount.PermissionData"
+                  },
+                  "typeName": {
+                    "id": 61078,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 61077,
+                      "name": "IAccount.PermissionData",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 60841,
+                      "src": "686:23:101"
+                    },
+                    "referencedDeclaration": 60841,
+                    "src": "686:23:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PermissionData_$60841_storage_ptr",
+                      "typeString": "struct IAccount.PermissionData"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "685:50:101"
+            },
+            "returnParameters": {
+              "id": 61083,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61082,
+                  "mutability": "mutable",
+                  "name": "_permissionDataHash",
+                  "nameLocation": "767:19:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61084,
+                  "src": "759:27:101",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 61081,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "759:7:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "758:29:101"
+            },
+            "scope": 61085,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IAuthController",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          61085
+        ],
+        "name": "IAuthController",
+        "nameLocation": "193:15:101",
+        "scope": 61154,
+        "usedErrors": []
+      },
+      {
+        "id": 61153,
+        "nodeType": "ContractDefinition",
+        "src": "792:932:101",
+        "nodes": [
+          {
+            "id": 61090,
+            "nodeType": "UsingForDirective",
+            "src": "841:24:101",
+            "nodes": [],
+            "global": false,
+            "libraryName": {
+              "id": 61088,
+              "name": "ECDSA",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 52671,
+              "src": "847:5:101"
+            },
+            "typeName": {
+              "id": 61089,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "857:7:101",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            }
+          },
+          {
+            "id": 61133,
+            "nodeType": "FunctionDefinition",
+            "src": "871:611:101",
+            "nodes": [],
+            "body": {
+              "id": 61132,
+              "nodeType": "Block",
+              "src": "1048:434:101",
+              "nodes": [],
+              "statements": [
+                {
+                  "assignments": [
+                    61102
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 61102,
+                      "mutability": "mutable",
+                      "name": "_hash",
+                      "nameLocation": "1112:5:101",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 61132,
+                      "src": "1104:13:101",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 61101,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1104:7:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61109,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "id": 61106,
+                            "name": "_permissionData",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 61093,
+                            "src": "1141:15:101",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                              "typeString": "struct IAccount.PermissionData calldata"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                              "typeString": "struct IAccount.PermissionData calldata"
+                            }
+                          ],
+                          "expression": {
+                            "id": 61104,
+                            "name": "abi",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -1,
+                            "src": "1130:3:101",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_abi",
+                              "typeString": "abi"
+                            }
+                          },
+                          "id": 61105,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "memberName": "encode",
+                          "nodeType": "MemberAccess",
+                          "src": "1130:10:101",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                            "typeString": "function () pure returns (bytes memory)"
+                          }
+                        },
+                        "id": 61107,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1130:27:101",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "id": 61103,
+                      "name": "keccak256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": -8,
+                      "src": "1120:9:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes memory) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 61108,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1120:38:101",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1104:54:101"
+                },
+                {
+                  "assignments": [
+                    61111
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 61111,
+                      "mutability": "mutable",
+                      "name": "_ethSignedMessageHash",
+                      "nameLocation": "1176:21:101",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 61132,
+                      "src": "1168:29:101",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 61110,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1168:7:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61116,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 61114,
+                        "name": "_hash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 61102,
+                        "src": "1229:5:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      ],
+                      "expression": {
+                        "id": 61112,
+                        "name": "ECDSA",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 52671,
+                        "src": "1200:5:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_ECDSA_$52671_$",
+                          "typeString": "type(library ECDSA)"
+                        }
+                      },
+                      "id": 61113,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "toEthSignedMessageHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 52628,
+                      "src": "1200:28:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes32_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes32) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 61115,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1200:35:101",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1168:67:101"
+                },
+                {
+                  "assignments": [
+                    61118
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 61118,
+                      "mutability": "mutable",
+                      "name": "_signer",
+                      "nameLocation": "1314:7:101",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 61132,
+                      "src": "1306:15:101",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      },
+                      "typeName": {
+                        "id": 61117,
+                        "name": "address",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1306:7:101",
+                        "stateMutability": "nonpayable",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61124,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 61121,
+                        "name": "_ethSignedMessageHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 61111,
+                        "src": "1338:21:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "id": 61122,
+                        "name": "_signature",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 61095,
+                        "src": "1361:10:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "expression": {
+                        "id": 61119,
+                        "name": "ECDSA",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 52671,
+                        "src": "1324:5:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_ECDSA_$52671_$",
+                          "typeString": "type(library ECDSA)"
+                        }
+                      },
+                      "id": 61120,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "recover",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 52437,
+                      "src": "1324:13:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes_memory_ptr_$returns$_t_address_$",
+                        "typeString": "function (bytes32,bytes memory) pure returns (address)"
+                      }
+                    },
+                    "id": 61123,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1324:48:101",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1306:66:101"
+                },
+                {
+                  "expression": {
+                    "id": 61130,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 61125,
+                      "name": "_authorized",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 61099,
+                      "src": "1428:11:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "commonType": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      },
+                      "id": 61129,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "id": 61126,
+                        "name": "_signer",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 61118,
+                        "src": "1442:7:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "==",
+                      "rightExpression": {
+                        "expression": {
+                          "id": 61127,
+                          "name": "_permissionData",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 61093,
+                          "src": "1453:15:101",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                            "typeString": "struct IAccount.PermissionData calldata"
+                          }
+                        },
+                        "id": 61128,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "client",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 60833,
+                        "src": "1453:22:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "src": "1442:33:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "1428:47:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 61131,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1428:47:101"
+                }
+              ]
+            },
+            "baseFunctions": [
+              61076
+            ],
+            "functionSelector": "0998d8de",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "auth",
+            "nameLocation": "880:4:101",
+            "overrides": {
+              "id": 61097,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1000:8:101"
+            },
+            "parameters": {
+              "id": 61096,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61093,
+                  "mutability": "mutable",
+                  "name": "_permissionData",
+                  "nameLocation": "918:15:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61133,
+                  "src": "885:48:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                    "typeString": "struct IAccount.PermissionData"
+                  },
+                  "typeName": {
+                    "id": 61092,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 61091,
+                      "name": "IAccount.PermissionData",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 60841,
+                      "src": "885:23:101"
+                    },
+                    "referencedDeclaration": 60841,
+                    "src": "885:23:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PermissionData_$60841_storage_ptr",
+                      "typeString": "struct IAccount.PermissionData"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 61095,
+                  "mutability": "mutable",
+                  "name": "_signature",
+                  "nameLocation": "950:10:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61133,
+                  "src": "935:25:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 61094,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "935:5:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "884:77:101"
+            },
+            "returnParameters": {
+              "id": 61100,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61099,
+                  "mutability": "mutable",
+                  "name": "_authorized",
+                  "nameLocation": "1031:11:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61133,
+                  "src": "1026:16:101",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 61098,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1026:4:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1025:18:101"
+            },
+            "scope": 61153,
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 61152,
+            "nodeType": "FunctionDefinition",
+            "src": "1488:233:101",
+            "nodes": [],
+            "body": {
+              "id": 61151,
+              "nodeType": "Block",
+              "src": "1644:77:101",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 61149,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 61142,
+                      "name": "_permissionDataHash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 61140,
+                      "src": "1654:19:101",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "arguments": [
+                            {
+                              "id": 61146,
+                              "name": "_permissionData",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 61136,
+                              "src": "1697:15:101",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                                "typeString": "struct IAccount.PermissionData calldata"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                                "typeString": "struct IAccount.PermissionData calldata"
+                              }
+                            ],
+                            "expression": {
+                              "id": 61144,
+                              "name": "abi",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": -1,
+                              "src": "1686:3:101",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_magic_abi",
+                                "typeString": "abi"
+                              }
+                            },
+                            "id": 61145,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "memberName": "encode",
+                            "nodeType": "MemberAccess",
+                            "src": "1686:10:101",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                              "typeString": "function () pure returns (bytes memory)"
+                            }
+                          },
+                          "id": 61147,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1686:27:101",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes_memory_ptr",
+                            "typeString": "bytes memory"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_bytes_memory_ptr",
+                            "typeString": "bytes memory"
+                          }
+                        ],
+                        "id": 61143,
+                        "name": "keccak256",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -8,
+                        "src": "1676:9:101",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                          "typeString": "function (bytes memory) pure returns (bytes32)"
+                        }
+                      },
+                      "id": 61148,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1676:38:101",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "1654:60:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 61150,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1654:60:101"
+                }
+              ]
+            },
+            "baseFunctions": [
+              61084
+            ],
+            "functionSelector": "22000346",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPermissionDataHash",
+            "nameLocation": "1497:21:101",
+            "overrides": {
+              "id": 61138,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1597:8:101"
+            },
+            "parameters": {
+              "id": 61137,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61136,
+                  "mutability": "mutable",
+                  "name": "_permissionData",
+                  "nameLocation": "1561:15:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61152,
+                  "src": "1528:48:101",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PermissionData_$60841_calldata_ptr",
+                    "typeString": "struct IAccount.PermissionData"
+                  },
+                  "typeName": {
+                    "id": 61135,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 61134,
+                      "name": "IAccount.PermissionData",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 60841,
+                      "src": "1528:23:101"
+                    },
+                    "referencedDeclaration": 60841,
+                    "src": "1528:23:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PermissionData_$60841_storage_ptr",
+                      "typeString": "struct IAccount.PermissionData"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1518:64:101"
+            },
+            "returnParameters": {
+              "id": 61141,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 61140,
+                  "mutability": "mutable",
+                  "name": "_permissionDataHash",
+                  "nameLocation": "1623:19:101",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61152,
+                  "src": "1615:27:101",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 61139,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1615:7:101",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1614:29:101"
+            },
+            "scope": 61153,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 61086,
+              "name": "IAuthController",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 61085,
+              "src": "819:15:101"
+            },
+            "id": 61087,
+            "nodeType": "InheritanceSpecifier",
+            "src": "819:15:101"
+          }
+        ],
+        "canonicalName": "AuthController",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          61153,
+          61085
+        ],
+        "name": "AuthController",
+        "nameLocation": "801:14:101",
+        "scope": 61154,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 101
+}

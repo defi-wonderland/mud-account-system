@@ -13,14 +13,11 @@ contract AccountSystem is System {
   address public ACCOUNT_FACTORY;
   address public AUTH_CONTROLLER;
 
-  constructor() {
-    AUTH_CONTROLLER = address(new AuthController());
-  }
-
   function setAccountFactory(address _accountFactory) public {
     require(ACCOUNT_FACTORY == address(0), "AccountSystem: already set");
     ACCOUNT_FACTORY = _accountFactory;
     AccountFactorySingleton.set(ACCOUNT_FACTORY);
+    AUTH_CONTROLLER = address(new AuthController());
   }
   
   function createAccount() public returns (address _account) {

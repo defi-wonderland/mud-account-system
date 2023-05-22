@@ -3,6 +3,7 @@ import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ActionEnv } from "../sections";
+import AuthControllerABI from "../abi/AuthController.sol/AuthController.abi.json";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 

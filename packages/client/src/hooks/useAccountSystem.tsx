@@ -34,7 +34,7 @@ export const useAccountSystem = () => {
     );
     return new Wallet(getBurnerWallet().value, provider);
   }
-  
+
   const getAccountContract = async (actionEnv: ActionEnv) => {
     const burnerWallet = await getBurnerWalletProvider();
     
