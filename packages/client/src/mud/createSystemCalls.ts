@@ -15,73 +15,6 @@ export function createSystemCalls(
   if (!fastTxExecutor) return;
   const permissions: any = {};
 
-  const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {
-    const authController = await worldContract.getAuthController();
-    const authControllerContract = new ethers.Contract(
-      authController,
-      AuthControllerABI,
-      (await actionEnv.accountSystem.getBurnerWalletProvider()).provider
-    );
-
-    console.log(authControllerContract);
-
-    const touple = {
-      authController: await worldContract.getAuthController(),
-      client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
-      world: worldContract.address,
-      limitChecker: await worldContract.getAccountSystemAddress(),
-      limitData: limitData,
-    };
-    console.log(touple);
-
-    return {
-      data: touple,
-      hash: await authControllerContract.callStatic.getPermissionDataHash(touple)
-    };
-  };
-
-  const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
-    return await actionEnv.provider.signer?.signMessage(permissionData);
-  };
-
-  const createGamePermissions = async (
-    actionEnv: ActionEnv,
-    firstAddress: string,
-    secondAddress: string
-  ) => {
-    const populatedTransaction =
-      await worldContract.populateTransaction.createGame(
-        firstAddress,
-        secondAddress
-      );
-    if (!populatedTransaction || !populatedTransaction.data) throw new Error('No populatedTransaction');
-    
-
-    const limitData = await worldContract.callStatic.getLimitData(
-      populatedTransaction.data
-    );
-
-    const permissionData = await getPermissionData(actionEnv, limitData);
-    const signature = await getSignature(actionEnv, permissionData.hash);
-    const accountContract = await actionEnv.accountSystem.getAccountContract(
-      actionEnv
-    );
-    const permissionId = await accountContract.callStatic.auth(
-      permissionData.data,
-      signature
-    );
-    await accountContract.auth(permissionData.data, signature, {
-      type: 2,
-      maxFeePerGas: 0,
-      maxPriorityFeePerGas: 0,
-      gasLimit: 1000000,
-    });
-    
-    console.log("AUTH SUCCESSFULL")
-    // TODO CHECK IF THIS IS OK!
-    return permissionId.toNumber();
-  };
-
   const createAccount = async () => {
     const tx = await worldSend("createAccount", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
@@ -99,13 +32,7 @@ export function createSystemCalls(
         secondAddress
       );
     if (!permissions["createGame"]) {
-      console.log('!permission');
-      const permissionId = await createGamePermissions(
-        actionEnv,
-        firstAddress,
-        secondAddress
-      );
-      console.log('permissionId', permissionId)
+      const permissionId = await authPermissions(actionEnv, populatedTransaction);
       permissions["createGame"] = permissionId;
     }
 
@@ -126,8 +53,11 @@ export function createSystemCalls(
   };
 
   const acceptGame = async (actionEnv: ActionEnv, gameId: string) => {
-    const txData = await worldContract.populateTransaction.acceptGame(gameId);
-    console.log(txData);
+    const populateTransaction = await worldContract.populateTransaction.acceptGame(gameId);
+    if (!permissions["acceptGame"]) {
+      const permissionId = await authPermissions(actionEnv, populateTransaction);
+      permissions["acceptGame"] = permissionId;
+    }
 
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
       actionEnv
@@ -135,7 +65,7 @@ export function createSystemCalls(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tx = await sendThroughAccount(
       permissions["acceptGame"],
-      txData.data!
+      populateTransaction.data!
     );
 
     console.log("ACCEPTED GAME")
@@ -149,17 +79,79 @@ export function createSystemCalls(
     gameId: string,
     message: string
   ) => {
-    const txData = await worldContract.populateTransaction.increment(
+    const populateTransaction = await worldContract.populateTransaction.increment(
       gameId,
       message
     );
+    if (!permissions["increment"]) {
+      const permissionId = await authPermissions(actionEnv, populateTransaction);
+      permissions["increment"] = permissionId;
+    }
     const permissionId = "420"; // TODO Get correct permission ID
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
       actionEnv
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tx = await sendThroughAccount(permissionId, txData.data!);
+    const tx = await sendThroughAccount(permissionId, populateTransaction.data!);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
+  const authPermissions = async (
+    actionEnv: ActionEnv,
+    populatedTransaction: ethers.PopulatedTransaction
+  ) => {
+    if (!populatedTransaction || !populatedTransaction.data) throw new Error('No populatedTransaction');
+
+    const limitData = await worldContract.callStatic.getLimitData(
+      populatedTransaction.data
+    );
+
+    const permissionData = await getPermissionData(actionEnv, limitData);
+    const signature = await getSignature(actionEnv, permissionData.hash);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(
+      actionEnv
+    );
+    const permissionId = await accountContract.callStatic.auth(
+      permissionData.data,
+      signature
+    );
+    await accountContract.auth(permissionData.data, signature, {
+      type: 2,
+      maxFeePerGas: 0,
+      maxPriorityFeePerGas: 0,
+      gasLimit: 1000000,
+    });
+
+    console.log("AUTH SUCCESSFULL")
+    // TODO CHECK IF THIS IS OK!
+    return permissionId.toNumber();
+  }
+
+
+  const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {
+    const authController = await worldContract.getAuthController();
+    const authControllerContract = new ethers.Contract(
+      authController,
+      AuthControllerABI,
+      (await actionEnv.accountSystem.getBurnerWalletProvider()).provider
+    );
+
+    const touple = {
+      authController: await worldContract.getAuthController(),
+      client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
+      world: worldContract.address,
+      limitChecker: await worldContract.getAccountSystemAddress(),
+      limitData: limitData,
+    };
+
+    return {
+      data: touple,
+      hash: await authControllerContract.callStatic.getPermissionDataHash(touple)
+    };
+  };
+
+  const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
+    return await actionEnv.provider.signer?.signMessage(permissionData);
   };
 
   return {
