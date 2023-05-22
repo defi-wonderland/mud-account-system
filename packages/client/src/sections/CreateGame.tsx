@@ -28,7 +28,6 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
     provider: useProvider(),
   };
   
-
   const games = useEntityQuery([Has(CounterGame)]);
   return (
     <div className="section">

@@ -60,6 +60,11 @@ export function createSystemCalls(
   };
 
 
+  const createAccount = async () => {
+    const tx = await worldSend("createAccount", []);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
   const createGame = async (
     actionEnv: ActionEnv,
     firstAddress: string,
@@ -97,20 +102,26 @@ export function createSystemCalls(
     console.log(txData);
 
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(actionEnv);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tx = await sendThroughAccount(permissions['acceptGame'], txData.data!);
 
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };
 
-  const increment = async (actionEnv: ActionEnv, gameId: string, message: string) => {
-    const tx = await worldSend("increment", [gameId, message]);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-    return getComponentValue(CounterGame, singletonEntity);
-  };
-
-  const createAccount = async () => {
-    const tx = await worldSend("createAccount", []);
+  const increment = async (
+    actionEnv: ActionEnv,
+    gameId: string,
+    message: string
+  ) => {
+    const txData = await worldContract.populateTransaction.increment(
+      gameId,
+      message
+    );
+    const permissionId = "420"; // TODO Get correct permission ID
+    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(actionEnv);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const tx = await sendThroughAccount(permissionId, txData.data!);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
