@@ -16,10 +16,11 @@ contract CounterGameSystemTest is MudV2Test {
     using CounterGame for bytes;
 
     IWorld public world;
+    address public accountOne = address(0x001);
+    address public accountTwo = address(0x002);
 
     function setUp() public override {
         super.setUp();
-        console.log("worldAddress", worldAddress);
         world = IWorld(worldAddress);
     }
 
@@ -33,22 +34,17 @@ contract CounterGameSystemTest is MudV2Test {
     }
 
     function testGetPermissionData() public {
-        IWorld world = IWorld(worldAddress);
-
         bytes4 _functionSig = (ICounterGameSystem.createGame.selector);
-        bytes memory _data = abi.encode(_functionSig, address(1), address(2));
+        bytes memory _data = abi.encode(_functionSig, accountOne, accountTwo);
         bytes memory _limitData = world.getPermissionData(_data);
 
-        console.logBytes(_limitData);
         assertEq(_limitData, _data);
     }
 
     function testCheckAndUpdateLimitSuccess() public {
-        IWorld world = IWorld(worldAddress);
-
         // Get rule data
         bytes4 _functionSig = (ICounterGameSystem.createGame.selector);
-        bytes memory _data = abi.encode(_functionSig, address(1), address(2));
+        bytes memory _data = abi.encode(_functionSig, accountOne, accountTwo);
         bytes memory _limitData = world.getPermissionData(_data);
 
         uint256 _permissionId = 1;
@@ -69,11 +65,9 @@ contract CounterGameSystemTest is MudV2Test {
     }
 
     function testCheckAndUpdateLimitRevertsWithoutPermission() public {
-        IWorld world = IWorld(worldAddress);
-
         // Get rule data
         bytes4 _functionSig = (ICounterGameSystem.createGame.selector);
-        bytes memory _data = abi.encode(_functionSig, address(1), address(2));
+        bytes memory _data = abi.encode(_functionSig, accountOne, accountTwo);
         bytes memory _limitData = world.getPermissionData(_data);
 
         uint256 _permissionId = 1;
@@ -97,19 +91,15 @@ contract CounterGameSystemTest is MudV2Test {
 
     function testIncrementSucceeds() public {
         // Define vars
-        IWorld world = IWorld(worldAddress);
-        address accoutOne = address(1);
-        address accountTwo = address(2);
         uint256 _permissionId = 1;
 
         // Get rule data
         bytes4 _functionSig = (ICounterGameSystem.createGame.selector);
-        bytes memory _data = abi.encode(_functionSig, accoutOne, accountTwo);
+        bytes memory _data = abi.encode(_functionSig, accountOne, accountTwo);
         bytes memory _limitData = world.getPermissionData(_data);
 
         // Create game
-        bytes32 _gameId = world.createGame(accoutOne, accountTwo);
-        console.logBytes32(_gameId);
+        bytes32 _gameId = world.createGame(accountOne, accountTwo);
 
         // Accept game user one
         _functionSig = (ICounterGameSystem.acceptGame.selector);
@@ -126,10 +116,13 @@ contract CounterGameSystemTest is MudV2Test {
             limitData: _limitData
         });
 
+        // Update permission id
         ++_permissionId;
+        // Check and update limit
         world.checkAndUpdateLimit(_permissionId, _permissionData, _limitData);
 
-        vm.prank(address(1));
+        // Exec user one accept game
+        vm.prank(accountOne);
         world.acceptGame(_gameId);
 
         // Accept game user two
@@ -149,7 +142,7 @@ contract CounterGameSystemTest is MudV2Test {
         world.acceptGame(_gameId);
 
         // increment
-        vm.prank(accoutOne);
+        vm.prank(accountOne);
         bool _playerWon = world.increment(_gameId, "someMsg");
 
         // Check win is false
