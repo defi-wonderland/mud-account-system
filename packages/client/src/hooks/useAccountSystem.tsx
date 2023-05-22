@@ -26,6 +26,10 @@ export const useAccountSystem = () => {
         (await getNetworkConfig()).provider.jsonRpcUrl
       )
     );
+
+    return (permissionId: string, data: string) => {
+      accountContract.execute(permissionId, data);
+    };
   };
 
   return {
