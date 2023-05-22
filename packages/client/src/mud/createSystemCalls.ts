@@ -9,10 +9,9 @@ import AuthControllerABI from "../../../contracts/out/AuthController.sol/AuthCon
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { worldSend, txReduced$, singletonEntity, worldContract, fastTxExecutor }: SetupNetworkResult,
+  { worldSend, txReduced$, singletonEntity, worldContract }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
-  if (!fastTxExecutor) return;
   const permissions: any = {};
 
   const createAccount = async () => {
@@ -69,6 +68,7 @@ export function createSystemCalls(
     );
 
     console.log("ACCEPTED GAME")
+    delete permissions["acceptGame"];
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     console.log("ACCEPTED GAME AFTER WAIT")
     return getComponentValue(CounterGame, singletonEntity);
@@ -87,12 +87,11 @@ export function createSystemCalls(
       const permissionId = await authPermissions(actionEnv, populateTransaction);
       permissions["increment"] = permissionId;
     }
-    const permissionId = "420"; // TODO Get correct permission ID
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
       actionEnv
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tx = await sendThroughAccount(permissionId, populateTransaction.data!);
+    const tx = await sendThroughAccount(permissions["increment"], populateTransaction.data!);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
