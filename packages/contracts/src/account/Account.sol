@@ -46,7 +46,8 @@ contract Account is IAccount {
     {
         bool _authorized = _permissionData.authController.auth(_permissionData, _signature);
         if (!_authorized) revert("Account::auth: invalid authorizarion");
-        _permissionId = _permissionIdCounter++;
+        _permissionIdCounter = _permissionIdCounter + 1;
+        _permissionId = _permissionIdCounter;
         permissionData[_permissionId] = _permissionData;
     }
 

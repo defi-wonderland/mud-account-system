@@ -9,9 +9,10 @@ import AuthControllerABI from "../../../contracts/out/AuthController.sol/AuthCon
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { worldSend, txReduced$, singletonEntity, worldContract }: SetupNetworkResult,
+  { worldSend, txReduced$, singletonEntity, worldContract, fastTxExecutor }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
+  if (!fastTxExecutor) return;
   const permissions: any = {};
 
   const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {
@@ -40,7 +41,6 @@ export function createSystemCalls(
   };
 
   const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
-    // TODO Ardy please fix this
     return await actionEnv.provider.signer?.signMessage(permissionData);
   };
 
@@ -49,7 +49,6 @@ export function createSystemCalls(
     firstAddress: string,
     secondAddress: string
   ) => {
-    console.log('createGamePermissions')
     const populatedTransaction =
       await worldContract.populateTransaction.createGame(
         firstAddress,
@@ -57,35 +56,30 @@ export function createSystemCalls(
       );
     if (!populatedTransaction || !populatedTransaction.data) throw new Error('No populatedTransaction');
     
-    console.log('populatedTransaction', populatedTransaction.data)
-    console.log('worldContract', worldContract)
 
-    const limitData = await worldContract.getLimitData(
+    const limitData = await worldContract.callStatic.getLimitData(
       populatedTransaction.data
     );
-    console.log('limitData', limitData)
 
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData.hash);
-    console.log("signature");
-    console.log(signature);
     const accountContract = await actionEnv.accountSystem.getAccountContract(
       actionEnv
     );
-    console.log("accountContract");
-    console.log(accountContract);
-    // FIX Error here!
-    console.log('permissionData')
-    console.log(permissionData)
     const permissionId = await accountContract.callStatic.auth(
       permissionData.data,
       signature
     );
-    console.log("permissionId", permissionId);
-    const receipt = await accountContract.auth(permissionData.data, signature);
-    console.log(receipt);
+    await accountContract.auth(permissionData.data, signature, {
+      type: 2,
+      maxFeePerGas: 0,
+      maxPriorityFeePerGas: 0,
+      gasLimit: 1000000,
+    });
+    
+    console.log("AUTH SUCCESSFULL")
     // TODO CHECK IF THIS IS OK!
-    return permissionId;
+    return permissionId.toNumber();
   };
 
   const createAccount = async () => {
@@ -104,7 +98,6 @@ export function createSystemCalls(
         firstAddress,
         secondAddress
       );
-    console.log('populatedTransaction');
     if (!permissions["createGame"]) {
       console.log('!permission');
       const permissionId = await createGamePermissions(
@@ -127,8 +120,6 @@ export function createSystemCalls(
       populatedTransaction.data!
     );
     console.log(2);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-    console.log(3);
     delete permissions["createGame"];
     console.log(4);
     return getComponentValue(CounterGame, singletonEntity);
@@ -147,7 +138,9 @@ export function createSystemCalls(
       txData.data!
     );
 
+    console.log("ACCEPTED GAME")
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    console.log("ACCEPTED GAME AFTER WAIT")
     return getComponentValue(CounterGame, singletonEntity);
   };
 

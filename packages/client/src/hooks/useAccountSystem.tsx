@@ -1,7 +1,7 @@
 import { Wallet, ethers, providers } from "ethers";
-import AccountSystemABI from "../../../contracts/out//AccountSystem.sol/AccountSystem.abi.json";
-import AccountABI from "../../../contracts/out//Account.sol/Account.abi.json";
-import CounterGameSystemABI from "../../../contracts/out//CounterGameSystem.sol/CounterGameSystem.abi.json";
+import AccountSystemABI from "../../../contracts/out/AccountSystem.sol/AccountSystem.abi.json";
+import AccountABI from "../../../contracts/out/Account.sol/Account.abi.json";
+import CounterGameSystemABI from "../../../contracts/out/CounterGameSystem.sol/CounterGameSystem.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 import { getBurnerWallet } from "@latticexyz/std-client";
 import { ActionEnv } from "../context";
@@ -26,7 +26,16 @@ export const useAccountSystem = () => {
     const accountContract = await getAccountContract(actionEnv);
 
     return (permissionId: string, data: string) => {
-      return accountContract.execute(permissionId, ethers.utils.toUtf8Bytes(data));
+      return accountContract.execute(
+        permissionId,
+        ethers.utils.toUtf8Bytes(data), 
+        {
+          type: 2,
+          maxFeePerGas: 0,
+          maxPriorityFeePerGas: 0,
+          gasLimit: 1000000,
+        }
+      );
     };
   };
 
@@ -42,7 +51,7 @@ export const useAccountSystem = () => {
     return new ethers.Contract(
       actionEnv.provider.account,
       AccountABI,
-      burnerWallet.provider
+      new providers.JsonRpcProvider()
     ).connect(burnerWallet);
   }
 
@@ -53,7 +62,7 @@ export const useAccountSystem = () => {
     return new ethers.Contract(
       counterGameSystemAddress,
       CounterGameSystemABI,
-      burnerWallet.provider
+      new providers.JsonRpcProvider()
     ).connect(burnerWallet);
   }
 
