@@ -12,25 +12,25 @@ export const useAccountSystem = () => {
     const accountFactoryContract = new ethers.Contract(
       accountFactory,
       AccountSystemABI,
-      new providers.JsonRpcProvider((await getNetworkConfig()).provider.jsonRpcUrl)
+      new providers.JsonRpcProvider()
     );
 
     return accountFactoryContract.ownerAccounts(burnerAccount, index);
-  }
+  };
 
-  const sendAsAccount = async (
-    account: string,
-  ) => {
+  const sendAsAccount = async (account: string) => {
     const accountContract = new ethers.Contract(
       account,
       AccountABI,
-      new providers.JsonRpcProvider((await getNetworkConfig()).provider.jsonRpcUrl)
+      new providers.JsonRpcProvider(
+        (await getNetworkConfig()).provider.jsonRpcUrl
+      )
     );
 
-    return (permissionId: string, data: string,) => {
+    return (permissionId: string, data: string) => {
       accountContract.execute(permissionId, data);
-    }
-  }
+    };
+  };
 
   return {
     getAccounts,

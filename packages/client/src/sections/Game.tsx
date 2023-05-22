@@ -1,21 +1,32 @@
-import { useComponentValue } from "@latticexyz/react";
+import { useComponentValue, useRows } from "@latticexyz/react";
 import { useMUD } from "../MUDContext";
+import { useEntityQuery } from "@latticexyz/react";
+import { Has, getComponentValueStrict } from "@latticexyz/recs";
 
 export const Game = () => {
   const {
     components: { CounterGame, AccountFactorySingleton },
-    network: { singletonEntity },
+    network: { singletonEntity, storeCache },
+    systemCalls: { increment },
   } = useMUD();
 
   return (
     <div className="section">
       <h1>Game Section</h1>
-      <div>{/* Counter: <span>{counter?.value ?? "??"}</span> */}</div>
+      <br />
+      <br />
+      <br />
       <button
         type="button"
         onClick={async (event) => {
           event.preventDefault();
-          // console.log("new counter value:", await increment());
+          console.log(
+            "new counter value:",
+            await increment(
+              "0x0000000000000000000000000000000000000000000000000000000000000001",
+              ""
+            )
+          );
         }}
       >
         Increment
