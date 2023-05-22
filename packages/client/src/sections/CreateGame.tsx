@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMUD } from "../MUDContext";
 import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValueStrict } from "@latticexyz/recs";
+import { useAccountSystem } from "../hooks";
 
 interface CreateGameProps {
   signMessage: (message: string) => Promise<string | undefined>;
@@ -15,6 +16,9 @@ export const CreateGame = ({ signMessage }: CreateGameProps) => {
     systemCalls: { createGame },
     components: { CounterGame },
   } = useMUD();
+  
+  const { sendAsAccount } = useAccountSystem();
+
   const games = useEntityQuery([Has(CounterGame)]);
   return (
     <div className="section">
@@ -30,7 +34,7 @@ export const CreateGame = ({ signMessage }: CreateGameProps) => {
       <br />
       <button
         onClick={async () => {
-          await createGame(player1, player2);
+          await createGame(sendAsAccount, player1, player2);
         }}
       >
         Create Game

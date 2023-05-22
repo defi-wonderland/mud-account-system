@@ -10,13 +10,11 @@ export function createSystemCalls(
   { CounterGame }: ClientComponents
 ) {
 
-  const createGame = async (firstAddress: string, secondAddress: string) => {
+  const createGame = async (sendAsAccount: any, firstAddress: string, secondAddress: string) => {
 
-    const txData = await worldContract.populateTransaction.createGame(firstAddress, secondAddress);
-    console.log(txData);
-    // TODO use txData to send as account using 
-
-    const tx = await worldSend("createGame", [firstAddress, secondAddress]);
+    const populatedTransaction = await worldContract.populateTransaction.createGame(firstAddress, secondAddress);
+    const permissionId = '1'; // TODO Get correct permission ID
+    const tx = await sendAsAccount(permissionId, populatedTransaction?.data);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };

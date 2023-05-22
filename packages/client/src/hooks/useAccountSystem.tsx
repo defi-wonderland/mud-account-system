@@ -20,8 +20,6 @@ export const useAccountSystem = () => {
 
   const sendAsAccount = async (
     account: string,
-    permissionId: string,
-    data: string,
   ) => {
     const accountContract = new ethers.Contract(
       account,
@@ -29,7 +27,9 @@ export const useAccountSystem = () => {
       new providers.JsonRpcProvider((await getNetworkConfig()).provider.jsonRpcUrl)
     );
 
-    return accountContract.execute(permissionId, data);
+    return (permissionId: string, data: string,) => {
+      accountContract.execute(permissionId, data);
+    }
   }
 
   return {
