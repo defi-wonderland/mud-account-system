@@ -31,7 +31,7 @@ export function createSystemCalls(
         secondAddress
       );
     if (!permissions["createGame"]) {
-      const permissionId = await authPermissions(actionEnv, populatedTransaction);
+      const permissionId = await authPermissions(actionEnv, populatedTransaction.data!);
       permissions["createGame"] = permissionId;
     }
 
@@ -54,7 +54,7 @@ export function createSystemCalls(
   const acceptGame = async (actionEnv: ActionEnv, gameId: string) => {
     const populateTransaction = await worldContract.populateTransaction.acceptGame(gameId);
     if (!permissions["acceptGame"]) {
-      const permissionId = await authPermissions(actionEnv, populateTransaction);
+      const permissionId = await authPermissions(actionEnv, populateTransaction.data!);
       permissions["acceptGame"] = permissionId;
     }
 
@@ -84,7 +84,7 @@ export function createSystemCalls(
       message
     );
     if (!permissions["increment"]) {
-      const permissionId = await authPermissions(actionEnv, populateTransaction);
+      const permissionId = await authPermissions(actionEnv, populateTransaction.data!.substring(0,74));
       permissions["increment"] = permissionId;
     }
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
@@ -97,12 +97,10 @@ export function createSystemCalls(
 
   const authPermissions = async (
     actionEnv: ActionEnv,
-    populatedTransaction: ethers.PopulatedTransaction
+    populatedTransactionData: string
   ) => {
-    if (!populatedTransaction || !populatedTransaction.data) throw new Error('No populatedTransaction');
-
     const limitData = await worldContract.callStatic.getLimitData(
-      populatedTransaction.data
+      populatedTransactionData
     );
 
     const permissionData = await getPermissionData(actionEnv, limitData);
