@@ -4,7 +4,7 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ethers } from "ethers";
 import { ActionEnv } from "../context";
-import AuthControllerABI from "../abi/AuthController.sol/AuthController.abi.json";
+import AuthControllerABI from "../../../contracts/out/AuthController.sol/AuthController.abi.json";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -33,9 +33,10 @@ export function createSystemCalls(
     };
     console.log(touple);
 
-    return await authControllerContract.callStatic.getPermissionDataHash(
-      touple
-    );
+    return {
+      data: touple,
+      hash: await authControllerContract.callStatic.getPermissionDataHash(touple)
+    };
   };
 
   const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
@@ -65,7 +66,7 @@ export function createSystemCalls(
     console.log('limitData', limitData)
 
     const permissionData = await getPermissionData(actionEnv, limitData);
-    const signature = await getSignature(actionEnv, permissionData);
+    const signature = await getSignature(actionEnv, permissionData.hash);
     console.log("signature");
     console.log(signature);
     const accountContract = await actionEnv.accountSystem.getAccountContract(
@@ -73,12 +74,15 @@ export function createSystemCalls(
     );
     console.log("accountContract");
     console.log(accountContract);
+    // FIX Error here!
+    console.log('permissionData')
+    console.log(permissionData)
     const permissionId = await accountContract.callStatic.auth(
-      permissionData,
+      permissionData.data,
       signature
     );
     console.log("permissionId", permissionId);
-    const receipt = await accountContract.auth(permissionData, signature);
+    const receipt = await accountContract.auth(permissionData.data, signature);
     console.log(receipt);
     // TODO CHECK IF THIS IS OK!
     return permissionId;

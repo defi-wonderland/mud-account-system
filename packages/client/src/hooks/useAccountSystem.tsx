@@ -1,7 +1,7 @@
 import { Wallet, ethers, providers } from "ethers";
-import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
-import AccountABI from "../abi/Account.sol/Account.abi.json";
-import CounterGameSystemABI from "../abi/CounterGameSystem.sol/CounterGameSystem.abi.json";
+import AccountSystemABI from "../../../contracts/out//AccountSystem.sol/AccountSystem.abi.json";
+import AccountABI from "../../../contracts/out//Account.sol/Account.abi.json";
+import CounterGameSystemABI from "../../../contracts/out//CounterGameSystem.sol/CounterGameSystem.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 import { getBurnerWallet } from "@latticexyz/std-client";
 import { ActionEnv } from "../context";
@@ -42,7 +42,7 @@ export const useAccountSystem = () => {
     return new ethers.Contract(
       actionEnv.provider.account,
       AccountABI,
-      burnerWallet.provider 
+      burnerWallet.provider
     ).connect(burnerWallet);
   }
 
