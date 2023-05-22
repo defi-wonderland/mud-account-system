@@ -22,13 +22,18 @@ export function createSystemCalls(
       (await actionEnv.accountSystem.getBurnerWalletProvider()).provider
     );
 
-    return await authControllerContract.callStatic.getPermissionDataHash({
+    console.log(authControllerContract);
+
+    const touple = {
       authController: await worldContract.getAuthController(),
       client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
       world: worldContract.address,
       limitChecker: await worldContract.getAccountSystemAddress(),
       limitData: limitData,
-    });
+    }
+    console.log(touple)
+
+    return await authControllerContract.callStatic.getPermissionDataHash(touple);
   }
 
   const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
@@ -55,8 +60,13 @@ export function createSystemCalls(
 
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData);
+    console.log("signature");
+    console.log(signature);
     const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
-    const permissionId = accountContract.callStatic.auth(permissionData, signature);
+    console.log("accountContract")
+    console.log(accountContract)
+    const permissionId = await accountContract.callStatic.auth(permissionData, signature);
+    console.log("permissionId", permissionId);
     const receipt = await accountContract.auth(permissionData, signature);
     console.log(receipt);
     // TODO CHECK IF THIS IS OK!

@@ -37,13 +37,14 @@ export const useAccountSystem = () => {
 
   const getAccountContract = async (actionEnv: ActionEnv) => {
     const burnerWallet = await getBurnerWalletProvider();
-    
+    console.log("actionEnv.provider.account");
+    console.log(actionEnv.provider.account); // empty
     return new ethers.Contract(
       actionEnv.provider.account,
       AccountABI,
-      burnerWallet
-    );
-  }
+      burnerWallet.provider
+    ).connect(burnerWallet);
+  } 
 
   return {
     getAccounts,
