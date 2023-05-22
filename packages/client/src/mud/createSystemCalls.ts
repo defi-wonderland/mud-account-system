@@ -4,6 +4,7 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ethers } from "ethers";
 import { ActionEnv } from "../sections";
+import AuthControllerABI from "../abi/AuthController.sol/AuthController.abi.json";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -14,13 +15,28 @@ export function createSystemCalls(
   const permissions: any = {};
 
   const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {    
-    return {
+    const authController = await worldContract.getAuthController();
+    const authControllerContract = new ethers.Contract(
+      authController,
+      AuthControllerABI,
+      actionEnv.provider.provider
+    );
+
+    console.log({
       authController: await worldContract.getAuthController(),
       client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
       world: worldContract.address,
       limitChecker: await worldContract.getAccountSystemAddress(),
       limitData: limitData,
-    };
+    })
+
+    return await authControllerContract.callStatic.getPermissionDataHash({
+      authController: await worldContract.getAuthController(),
+      client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
+      world: worldContract.address,
+      limitChecker: await worldContract.getAccountSystemAddress(),
+      limitData: limitData,
+    });
   }
 
   const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
@@ -38,17 +54,16 @@ export function createSystemCalls(
         firstAddress,
         secondAddress
       );
-    
-    console.log("ethers.utils.toUtf8Bytes(populatedTransaction.data!)");
-    console.log(populatedTransaction.data!);
-    console.log(ethers.utils.toUtf8Bytes(populatedTransaction.data!));
-
+  
     const limitData =
       await worldContract.callStatic.getLimitData(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        ethers.utils.toUtf8Bytes(populatedTransaction.data!)
+        populatedTransaction.data!
     );
-    
+
+    console.log("limitData")
+    console.log(limitData)
+
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData);
     const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
