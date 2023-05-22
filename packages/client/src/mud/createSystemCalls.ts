@@ -48,16 +48,21 @@ export function createSystemCalls(
     firstAddress: string,
     secondAddress: string
   ) => {
+    console.log('createGamePermissions')
     const populatedTransaction =
       await worldContract.populateTransaction.createGame(
         firstAddress,
         secondAddress
       );
+    if (!populatedTransaction || !populatedTransaction.data) throw new Error('No populatedTransaction');
+    
+    console.log('populatedTransaction', populatedTransaction.data)
+    console.log('worldContract', worldContract)
 
-    const limitData = await worldContract.callStatic.getLimitData(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      populatedTransaction.data!
+    const limitData = await worldContract.getLimitData(
+      populatedTransaction.data
     );
+    console.log('limitData', limitData)
 
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData);
@@ -89,18 +94,21 @@ export function createSystemCalls(
     firstAddress: string,
     secondAddress: string
   ) => {
+    console.log("createGame");
     const populatedTransaction =
       await worldContract.populateTransaction.createGame(
         firstAddress,
         secondAddress
       );
-
+    console.log('populatedTransaction');
     if (!permissions["createGame"]) {
+      console.log('!permission');
       const permissionId = await createGamePermissions(
         actionEnv,
         firstAddress,
         secondAddress
       );
+      console.log('permissionId', permissionId)
       permissions["createGame"] = permissionId;
     }
 
@@ -108,13 +116,17 @@ export function createSystemCalls(
     const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
       actionEnv
     );
+    console.log(1);
     const tx = await sendThroughAccount(
       permissions["createGame"],
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       populatedTransaction.data!
     );
+    console.log(2);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    console.log(3);
     delete permissions["createGame"];
+    console.log(4);
     return getComponentValue(CounterGame, singletonEntity);
   };
 

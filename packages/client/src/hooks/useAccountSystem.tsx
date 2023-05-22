@@ -1,9 +1,11 @@
 import { Wallet, ethers, providers } from "ethers";
 import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
 import AccountABI from "../abi/Account.sol/Account.abi.json";
+import CounterGameSystemABI from "../abi/CounterGameSystem.sol/CounterGameSystem.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 import { getBurnerWallet } from "@latticexyz/std-client";
-import { ActionEnv } from "../sections";
+import { ActionEnv } from "../context";
+import { IWorld } from "contracts/types/ethers-contracts/IWorld";
 
 export const useAccountSystem = () => {
   const getAccounts = async (
@@ -37,19 +39,29 @@ export const useAccountSystem = () => {
 
   const getAccountContract = async (actionEnv: ActionEnv) => {
     const burnerWallet = await getBurnerWalletProvider();
-    console.log("actionEnv.provider.account");
-    console.log(actionEnv.provider.account); // empty
     return new ethers.Contract(
       actionEnv.provider.account,
       AccountABI,
+      burnerWallet.provider 
+    ).connect(burnerWallet);
+  }
+
+  const getCounterGameSystemContract = async (actionEnv: ActionEnv, worldContract: IWorld) => {
+    const burnerWallet = await getBurnerWalletProvider();
+    const counterGameSystemAddress = await worldContract.getCounterGameSystemAddress();
+    
+    return new ethers.Contract(
+      counterGameSystemAddress,
+      CounterGameSystemABI,
       burnerWallet.provider
     ).connect(burnerWallet);
-  } 
+  }
 
   return {
     getAccounts,
     sendThrough,
     getAccountContract,
     getBurnerWalletProvider,
+    getCounterGameSystemContract,
   };
 };

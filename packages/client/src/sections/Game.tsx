@@ -2,6 +2,7 @@ import { useComponentValue, useRows } from "@latticexyz/react";
 import { useMUD } from "../MUDContext";
 import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValueStrict } from "@latticexyz/recs";
+import { useDataContext } from "../context";
 
 export const Game = () => {
   const {
@@ -9,6 +10,7 @@ export const Game = () => {
     network: { singletonEntity, storeCache },
     systemCalls: { increment },
   } = useMUD();
+  const { actionEnv } = useDataContext();
 
   return (
     <div className="section">
@@ -23,6 +25,7 @@ export const Game = () => {
           console.log(
             "new counter value:",
             await increment(
+              actionEnv,
               "0x0000000000000000000000000000000000000000000000000000000000000001",
               ""
             )
