@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { useMUD } from "../MUDContext";
-import { ActionEnv } from "./CreateGame";
-import { useAccountSystem, useProvider } from "../hooks";
+import { useDataContext } from "../context/DataProvider";
 
 export const JoinGame = () => {
   const [gameId, setGameId] = useState<string>("1");
+  const { actionEnv } = useDataContext();
 
   const {
     systemCalls: { acceptGame },
   } = useMUD();
-
-  const actionEnv: ActionEnv = {
-    accountSystem: useAccountSystem(),
-    provider: useProvider(),
-  };
 
   const handleId = (id: string) => {
     return `0x000000000000000000000000000000000000000000000000000000000000000${id}`;

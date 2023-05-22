@@ -3,7 +3,7 @@ import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ethers } from "ethers";
-import { ActionEnv } from "../sections";
+import { ActionEnv } from "../context";
 import AuthControllerABI from "../abi/AuthController.sol/AuthController.abi.json";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
@@ -14,7 +14,7 @@ export function createSystemCalls(
 ) {
   const permissions: any = {};
 
-  const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {    
+  const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {
     const authController = await worldContract.getAuthController();
     const authControllerContract = new ethers.Contract(
       authController,
@@ -30,16 +30,18 @@ export function createSystemCalls(
       world: worldContract.address,
       limitChecker: await worldContract.getAccountSystemAddress(),
       limitData: limitData,
-    }
-    console.log(touple)
+    };
+    console.log(touple);
 
-    return await authControllerContract.callStatic.getPermissionDataHash(touple);
-  }
+    return await authControllerContract.callStatic.getPermissionDataHash(
+      touple
+    );
+  };
 
   const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
     // TODO Ardy please fix this
     return await actionEnv.provider.signer?.signMessage(permissionData);
-  }
+  };
 
   const createGamePermissions = async (
     actionEnv: ActionEnv,
@@ -51,28 +53,31 @@ export function createSystemCalls(
         firstAddress,
         secondAddress
       );
-  
-    const limitData =
-      await worldContract.callStatic.getLimitData(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        populatedTransaction.data!
+
+    const limitData = await worldContract.callStatic.getLimitData(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      populatedTransaction.data!
     );
 
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData);
     console.log("signature");
     console.log(signature);
-    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
-    console.log("accountContract")
-    console.log(accountContract)
-    const permissionId = await accountContract.callStatic.auth(permissionData, signature);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(
+      actionEnv
+    );
+    console.log("accountContract");
+    console.log(accountContract);
+    const permissionId = await accountContract.callStatic.auth(
+      permissionData,
+      signature
+    );
     console.log("permissionId", permissionId);
     const receipt = await accountContract.auth(permissionData, signature);
     console.log(receipt);
     // TODO CHECK IF THIS IS OK!
     return permissionId;
   };
-
 
   const createAccount = async () => {
     const tx = await worldSend("createAccount", []);
@@ -90,24 +95,26 @@ export function createSystemCalls(
         secondAddress
       );
 
-    if (!permissions['createGame']) {
+    if (!permissions["createGame"]) {
       const permissionId = await createGamePermissions(
         actionEnv,
         firstAddress,
         secondAddress
       );
-      permissions['createGame'] = permissionId;
+      permissions["createGame"] = permissionId;
     }
 
     console.log(populatedTransaction);
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(actionEnv);
+    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
+      actionEnv
+    );
     const tx = await sendThroughAccount(
-      permissions['createGame'],
+      permissions["createGame"],
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       populatedTransaction.data!
     );
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-    delete permissions['createGame'];
+    delete permissions["createGame"];
     return getComponentValue(CounterGame, singletonEntity);
   };
 
@@ -115,9 +122,14 @@ export function createSystemCalls(
     const txData = await worldContract.populateTransaction.acceptGame(gameId);
     console.log(txData);
 
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(actionEnv);
+    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
+      actionEnv
+    );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tx = await sendThroughAccount(permissions['acceptGame'], txData.data!);
+    const tx = await sendThroughAccount(
+      permissions["acceptGame"],
+      txData.data!
+    );
 
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
@@ -133,12 +145,13 @@ export function createSystemCalls(
       message
     );
     const permissionId = "420"; // TODO Get correct permission ID
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(actionEnv);
+    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
+      actionEnv
+    );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tx = await sendThroughAccount(permissionId, txData.data!);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
-
 
   return {
     createGame,

@@ -2,26 +2,17 @@ import { useState } from "react";
 import { useMUD } from "../MUDContext";
 import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValueStrict } from "@latticexyz/recs";
-import { useAccountSystem, useProvider } from "../hooks";
-
-export type ActionEnv = {
-  accountSystem: ReturnType<typeof useAccountSystem>;
-  provider: ReturnType<typeof useProvider>;
-};
+import { useDataContext } from "../context/DataProvider";
 
 export const CreateGame = () => {
   const [player1, setPlayer1] = useState<string>("");
   const [player2, setPlayer2] = useState<string>("");
+  const { actionEnv } = useDataContext();
 
   const {
     systemCalls: { createGame },
     components: { CounterGame },
   } = useMUD();
-
-  const actionEnv: ActionEnv = {
-    accountSystem: useAccountSystem(),
-    provider: useProvider(),
-  };
 
   const games = useEntityQuery([Has(CounterGame)]);
 

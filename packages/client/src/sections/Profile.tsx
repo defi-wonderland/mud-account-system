@@ -6,29 +6,18 @@ import { Wallet } from "ethers";
 
 import { useAccountSystem } from "../hooks";
 import { useMUD } from "../MUDContext";
+import { useDataContext } from "../context";
 
-interface ProfileProps {
-  signerAddress?: string;
-  burner?: string;
-  chainId?: number;
-  connect?: () => void;
-  account: string;
-  setAccount: (account: string) => void;
-}
+export const Profile = () => {
+  const { account, setAccount, signerAddress, chainId, connect } =
+    useDataContext().actionEnv.provider;
 
-export const Profile = ({
-  signerAddress,
-  burner,
-  chainId,
-  connect,
-  account,
-  setAccount,
-}: ProfileProps) => {
   const {
     systemCalls: { createAccount },
     components: { AccountFactorySingleton },
   } = useMUD();
   const { getAccounts } = useAccountSystem();
+
   const accountSystemId = useEntityQuery([Has(AccountFactorySingleton)]);
   const burnerWallet = new Wallet(getBurnerWallet().value);
 
@@ -65,7 +54,7 @@ export const Profile = ({
       <p>Signer address: {signerAddress}</p>
       <p>ChainId: {chainId}</p>
       <br />
-      <p>Burner address: {burner}</p>
+      <p>Burner address: {burnerWallet.address}</p>
       <br />
       <button onClick={createAccount}>Create Account</button>
       <br />
