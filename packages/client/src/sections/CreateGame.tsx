@@ -17,8 +17,9 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
     systemCalls: { createGame },
     components: { CounterGame },
   } = useMUD();
-  
-  const { sendAsAccount } = useAccountSystem();
+
+  const { sendThrough } = useAccountSystem();
+  const sendThroughAccount = sendThrough(account);
 
   const games = useEntityQuery([Has(CounterGame)]);
   return (
@@ -35,7 +36,7 @@ export const CreateGame = ({ signMessage, account }: CreateGameProps) => {
       <br />
       <button
         onClick={async () => {
-          await createGame(sendAsAccount, player1, player2);
+          await createGame(await sendThrough(account), player1, player2);
         }}
       >
         Create Game

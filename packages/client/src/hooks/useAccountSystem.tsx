@@ -1,7 +1,8 @@
-import { ethers, providers } from "ethers";
+import { Wallet, ethers, providers } from "ethers";
 import AccountSystemABI from "../abi/AccountSystem.sol/AccountSystem.abi.json";
 import AccountABI from "../abi/Account.sol/Account.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
+import { getBurnerWallet } from "@latticexyz/std-client";
 
 export const useAccountSystem = () => {
   const getAccounts = async (
@@ -18,22 +19,25 @@ export const useAccountSystem = () => {
     return accountFactoryContract.ownerAccounts(burnerAccount, index);
   };
 
-  const sendAsAccount = async (account: string) => {
+  const sendThrough = async (account: string) => {
+    const provider = new providers.JsonRpcProvider(
+      (await getNetworkConfig()).provider.jsonRpcUrl
+    );
+    const burnerWallet = new Wallet(getBurnerWallet().value, provider);
+
     const accountContract = new ethers.Contract(
       account,
       AccountABI,
-      new providers.JsonRpcProvider(
-        (await getNetworkConfig()).provider.jsonRpcUrl
-      )
+      burnerWallet
     );
 
     return (permissionId: string, data: string) => {
-      accountContract.execute(permissionId, data);
+      return accountContract.execute(permissionId, data);
     };
   };
 
   return {
     getAccounts,
-    sendAsAccount,
+    sendThrough,
   };
 };

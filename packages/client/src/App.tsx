@@ -17,7 +17,7 @@ export const App = () => {
         account={account}
         setAccount={setAccount}
       />
-      {signerAddress && (
+      {account && (
         <>
           {/* Game Creation Section */}
           <CreateGame signMessage={signMessage} account={account} />

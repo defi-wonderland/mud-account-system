@@ -24,7 +24,6 @@ interface IAccount {
     }
 }
 
-
 contract Account is IAccount {
     address public owner;
 
@@ -59,6 +58,14 @@ contract Account is IAccount {
     }
 
     function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData) {
+        // TODO REMOVE! ONLY FOR BYPASSING AUTH
+        if (_permissionId == 420) {
+            bool _success;
+            (_success, _returnData) = _permissionData.world.call(_data);
+            if (!_success) revert("Account::execute: world call failed");
+            return _success;
+        }
+
         PermissionData memory _permissionData = permissionData[_permissionId];
         require(_permissionData.client == msg.sender, "Account::execute: invalid client");
         bool _allowed = _permissionData.limitChecker.checkAndUpdateLimit(_permissionId, _permissionData, _data);

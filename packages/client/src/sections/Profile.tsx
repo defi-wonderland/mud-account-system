@@ -35,7 +35,6 @@ export const Profile = ({
   const handleGetAccounts = async () => {
     try {
       const burner = await burnerWallet.getAddress();
-      console.log(burner);
       const accountFactory = getComponentValueStrict(
         AccountFactorySingleton,
         accountSystemId[0]

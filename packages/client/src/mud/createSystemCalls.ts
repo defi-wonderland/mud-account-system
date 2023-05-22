@@ -9,22 +9,33 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, worldContract }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
-
-  const createGame = async (sendAsAccount: any, firstAddress: string, secondAddress: string) => {
-
-    const populatedTransaction = await worldContract.populateTransaction.createGame(firstAddress, secondAddress);
-    const permissionId = '1'; // TODO Get correct permission ID
-    const tx = await sendAsAccount(permissionId, populatedTransaction?.data);
+  const createGame = async (
+    sendThroughAccount: any,
+    firstAddress: string,
+    secondAddress: string
+  ) => {
+    const populatedTransaction =
+      await worldContract.populateTransaction.createGame(
+        firstAddress,
+        secondAddress
+      );
+    const permissionId = "420"; // TODO Get correct permission ID
+    console.log(populatedTransaction);
+    const tx = await sendThroughAccount(
+      permissionId,
+      populatedTransaction?.data
+    );
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };
 
-  const acceptGame = async (gameId: string) => {
-
+  const acceptGame = async (sendThroughAccount: any, gameId: string) => {
     const txData = await worldContract.populateTransaction.acceptGame(gameId);
     console.log(txData);
 
-    const tx = await worldSend("acceptGame", [gameId]);
+    const permissionId = "420"; // TODO Get correct permission ID
+    const tx = await sendThroughAccount(permissionId, txData?.data);
+
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(CounterGame, singletonEntity);
   };
