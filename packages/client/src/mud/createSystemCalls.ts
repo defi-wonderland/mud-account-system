@@ -107,9 +107,7 @@ export function createSystemCalls(
     await accountSend("auth", [
       permissionData.data, signature
     ]);
-    
-    console.log("AUTH SUCCESSFULL")
-    // TODO CHECK IF THIS IS OK!
+
     return permissionId.toNumber();
   }
 
@@ -129,6 +127,7 @@ export function createSystemCalls(
       limitChecker: await worldContract.getCounterGameSystemAddress(),
       limitData: limitData,
     };
+    console.log(touple)
 
     return {
       data: touple,

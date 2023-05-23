@@ -32,8 +32,6 @@ contract AuthController is IAuthController {
         override
         returns (bool _authorized)
     {
-        // TODO Fix auth signature checks
-        // return true;
         // Hash the permission data and nonce
         bytes32 _hash = keccak256(abi.encode(_permissionData));
         bytes32 _ethSignedMessageHash = ECDSA.toEthSignedMessageHash(_hash);

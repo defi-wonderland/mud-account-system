@@ -22,6 +22,11 @@ contract CounterGameSystem is ICounterGameSystem, LimitCheckerSystem {
 
     mapping(uint256 => bool) public oneTimePermission;
 
+    address immutable ADDRESS_THIS;
+
+    constructor() {
+      ADDRESS_THIS = address(this);
+    }
 
     function getLimitData(
       bytes calldata _data
@@ -47,7 +52,6 @@ contract CounterGameSystem is ICounterGameSystem, LimitCheckerSystem {
     ) external returns (bool _allowed) {
       // grab first 4 bytes of limitData
       bytes4 _functionSignature = bytes4(_permissionData.limitData);
-      // TODO: we assume that singnatures are unique, but we should check that :)
 
       if (_functionSignature == ICounterGameSystem.createGame.selector) {
         // check that _permissionId can only be executed once
@@ -126,7 +130,7 @@ contract CounterGameSystem is ICounterGameSystem, LimitCheckerSystem {
 
 
     function getCounterGameSystemAddress() external view returns (address _counterGameSystemAddress) {
-      _counterGameSystemAddress = address(this);
+      _counterGameSystemAddress = ADDRESS_THIS;
     }
 
 
