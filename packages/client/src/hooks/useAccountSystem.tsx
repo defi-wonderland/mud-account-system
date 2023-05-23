@@ -1,11 +1,9 @@
 import { Wallet, ethers, providers } from "ethers";
-import AccountSystemABI from "../../../contracts/out/AccountSystem.sol/AccountSystem.abi.json";
-import AccountABI from "../../../contracts/out/Account.sol/Account.abi.json";
-import CounterGameSystemABI from "../../../contracts/out/CounterGameSystem.sol/CounterGameSystem.abi.json";
+import AccountSystemABI from "../../abi/AccountSystem.sol/AccountSystem.abi.json";
+import AccountABI from "../../abi/Account.sol/Account.abi.json";
 import { getNetworkConfig } from "../mud/getNetworkConfig";
 import { getBurnerWallet } from "@latticexyz/std-client";
 import { ActionEnv } from "../context";
-import { IWorld } from "contracts/types/ethers-contracts/IWorld";
 
 export const useAccountSystem = () => {
   const getAccounts = async (
@@ -38,21 +36,10 @@ export const useAccountSystem = () => {
     ).connect(burnerWallet);
   }
 
-  const getCounterGameSystemContract = async (actionEnv: ActionEnv, worldContract: IWorld) => {
-    const burnerWallet = await getBurnerWalletProvider();
-    const counterGameSystemAddress = await worldContract.getCounterGameSystemAddress();
-    
-    return new ethers.Contract(
-      counterGameSystemAddress,
-      CounterGameSystemABI,
-      new providers.JsonRpcProvider()
-    ).connect(burnerWallet);
-  }
 
   return {
     getAccounts,
     getAccountContract,
     getBurnerWalletProvider,
-    getCounterGameSystemContract,
   };
 };
