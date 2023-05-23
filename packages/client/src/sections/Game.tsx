@@ -11,16 +11,15 @@ export const Game = () => {
   } = useMUD();
   const { actionEnv } = useDataContext();
   const [counter, setCounter] = useState(0);
+  const [winner, setWinner] = useState("");
   const counterKey = useEntityQuery([Has(CounterGame)]);
 
   const getCounter = async () => {
     try {
-      const counterValue = getComponentValueStrict(
-        CounterGame,
-        counterKey[0]
-      ).counter;
+      const counterValue = getComponentValueStrict(CounterGame, counterKey[0]);
 
-      setCounter(counterValue);
+      setCounter(counterValue.counter);
+      setWinner(counterValue.winner);
     } catch (error) {
       console.log("error gettting counter");
     }
@@ -34,7 +33,14 @@ export const Game = () => {
       <h1>Game Section</h1>
       <br />
       <br />
-      <p>Counter: {counter || "??"}</p>
+      <p>
+        Winner:{" "}
+        {winner === "0x0000000000000000000000000000000000000000"
+          ? "??"
+          : winner}
+      </p>
+      <br />
+      <p>Counter: {`${counter}/20` || "??"}</p>
       <br />
       <button
         type="button"
