@@ -13,10 +13,10 @@ import {IAccount} from "../account/Account.sol";
 interface ICounterGameSystem {
   function createGame(address _player1, address _player2) external returns (bytes32 _gameId);
   function acceptGame(bytes32 _gameId) external returns (bool _playerConsent);
-  function increment(bytes32 _gameId) external returns (bool _playerWon);
+  function increment(bytes32 _gameId, string calldata _message) external returns (bool _playerWon);
 }
 
-contract CounterGameSystem is LimitCheckerSystem {
+contract CounterGameSystem is ICounterGameSystem, LimitCheckerSystem {
 
     uint16 constant FINAL_COUNT = 20;
 
