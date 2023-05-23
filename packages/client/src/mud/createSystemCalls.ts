@@ -69,7 +69,6 @@ export function createSystemCalls(
 
     console.log("ACCEPTED GAME")
     delete permissions["acceptGame"];
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     console.log("ACCEPTED GAME AFTER WAIT")
     return getComponentValue(CounterGame, singletonEntity);
   };
@@ -92,7 +91,6 @@ export function createSystemCalls(
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tx = await sendThroughAccount(permissions["increment"], populateTransaction.data!);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const authPermissions = async (
