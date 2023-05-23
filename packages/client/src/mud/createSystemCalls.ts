@@ -3,7 +3,7 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ethers } from "ethers";
 import { ActionEnv } from "../context";
-import AuthControllerABI from "../../../contracts/out/AuthController.sol/AuthController.abi.json";
+import AuthControllerABI from "../../abi/AuthController.sol/AuthController.abi.json";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
