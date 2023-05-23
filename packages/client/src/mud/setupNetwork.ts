@@ -98,5 +98,6 @@ export async function setupNetwork() {
     worldContract,
     worldSend: bindFastTxExecute(worldContract),
     fastTxExecutor,
+    bindFastTxExecute,
   };
 }

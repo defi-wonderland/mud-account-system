@@ -1,34 +1,32 @@
 import { useState } from "react";
+import { useMUD } from "../MUDContext";
+import { useDataContext } from "../context/DataProvider";
 
-interface JoinGameProps {
-  signMessage: (message: string) => Promise<string | undefined>;
-}
+export const JoinGame = () => {
+  const [gameId, setGameId] = useState<string>("1");
+  const { actionEnv } = useDataContext();
 
-export const JoinGame = ({ signMessage }: JoinGameProps) => {
-  const [signedMsg, setSignedMsg] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const {
+    systemCalls: { acceptGame },
+  } = useMUD();
 
-  const handleSignMessage = async (message: string) => {
-    const signedMessage = await signMessage(message);
-    setSignedMsg(signedMessage || "");
+  const handleId = (id: string) => {
+    return `0x000000000000000000000000000000000000000000000000000000000000000${id}`;
   };
 
   return (
     <div className="section">
       <h1>Join Game Section</h1>
+
       <br />
-      <span>message: </span>
+      <p>game key:</p>
+      <input value={gameId} onChange={(e) => setGameId(e.target.value)} />
       <br />
-      <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
-      <br />
-      <button onClick={async () => handleSignMessage(message)}>
-        Sign Message
+      <button
+        onClick={async () => await acceptGame(actionEnv, handleId(gameId))}
+      >
+        Accept Game
       </button>
-      <br />
-      <br />
-      <span>signedMsg: </span>
-      <br />
-      <textarea value={signedMsg} disabled />
     </div>
   );
 };

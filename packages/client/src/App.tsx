@@ -1,22 +1,21 @@
 import "./styles.css";
 
-import { useProvider } from "./hooks";
 import { CreateGame, Game, JoinGame, Profile } from "./sections";
+import { useDataContext } from "./context";
 
 export const App = () => {
-  const { connect, signMessage, account, chainId } = useProvider();
-
+  const { account } = useDataContext().actionEnv.provider;
   return (
     <>
       {/* Profile section */}
-      <Profile account={account} chainId={chainId} connect={connect} />
+      <Profile />
       {account && (
         <>
           {/* Game Creation Section */}
-          <CreateGame signMessage={signMessage} />
+          <CreateGame />
 
           {/* Join Game Section */}
-          <JoinGame signMessage={signMessage} />
+          <JoinGame />
 
           {/* Game Section */}
           <Game />

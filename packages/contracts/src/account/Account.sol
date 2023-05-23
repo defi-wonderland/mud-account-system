@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0;
 
 import {IAuthController} from "../authController/AuthController.sol";
+import {ILimitCheckerSystem} from "../systems/LimitCheckerSystem.sol";
 
 interface IAccount {
     /**
@@ -9,7 +10,6 @@ interface IAccount {
      * @param authController The address of the auth controller.
      * @param client The address of the client.
      * @param world The address of the world.
-     * @param system The address of the system.
      * @param limitChecker The address of the limit checker.
      * @param limitData The limit data.
      */
@@ -17,15 +17,14 @@ interface IAccount {
         IAuthController authController;
         address client;
         address world;
-        address system;
-        ILimitChecker limitChecker;
+        ILimitCheckerSystem limitChecker;
         bytes limitData;
     }
-}
+    function auth(PermissionData calldata _permissionData, bytes calldata _signature)
+        external
+        returns (uint256 _permissionId);
 
-interface ILimitChecker {
-    function check(uint256 _permissionId, IAccount.PermissionData calldata _permissionData, bytes calldata _data)
-        external;
+    function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData);
 }
 
 contract Account is IAccount {
@@ -52,7 +51,8 @@ contract Account is IAccount {
     {
         bool _authorized = _permissionData.authController.auth(_permissionData, _signature);
         if (!_authorized) revert("Account::auth: invalid authorizarion");
-        _permissionId = _permissionIdCounter++;
+        _permissionIdCounter = _permissionIdCounter + 1;
+        _permissionId = _permissionIdCounter;
         permissionData[_permissionId] = _permissionData;
     }
 
@@ -64,7 +64,8 @@ contract Account is IAccount {
     function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData) {
         PermissionData memory _permissionData = permissionData[_permissionId];
         require(_permissionData.client == msg.sender, "Account::execute: invalid client");
-        _permissionData.limitChecker.check(_permissionId, _permissionData, _data);
+        bool _allowed = _permissionData.limitChecker.checkAndUpdateLimit(_permissionId, _permissionData, _data);
+        if (!_allowed) revert("Account::execute: not allowed");
 
         bool _success;
         (_success, _returnData) = _permissionData.world.call(_data);

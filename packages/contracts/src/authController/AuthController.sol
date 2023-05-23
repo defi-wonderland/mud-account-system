@@ -16,6 +16,11 @@ interface IAuthController {
         external
         pure
         returns (bool _authorized);
+
+    function getPermissionDataHash(IAccount.PermissionData calldata _permissionData)
+        external
+        view
+        returns (bytes32 _permissionDataHash);
 }
 
 contract AuthController is IAuthController {
@@ -36,5 +41,14 @@ contract AuthController is IAuthController {
 
         // Check if the signer is the client
         _authorized = _signer == _permissionData.client;
+    }
+
+    function getPermissionDataHash(IAccount.PermissionData calldata _permissionData)
+        external
+        view
+        override
+        returns (bytes32 _permissionDataHash)
+    {
+        _permissionDataHash = keccak256(abi.encode(_permissionData));
     }
 }

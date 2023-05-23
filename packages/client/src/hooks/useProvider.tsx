@@ -4,13 +4,18 @@ import { providers } from "ethers";
 interface ProviderState {
   provider?: providers.JsonRpcProvider | undefined;
   signer?: providers.JsonRpcSigner | undefined;
-  account?: string;
+  signerAddress?: string;
   chainId?: number;
+  gameProvider: providers.JsonRpcProvider | undefined;
 }
 
 export const useProvider = () => {
-  const [state, setState] = useState<ProviderState>({});
-  const { provider, signer, account, chainId } = state;
+  const [state, setState] = useState<ProviderState>({
+    gameProvider: new providers.JsonRpcProvider(),
+  });
+  const [account, setAccount] = useState("");
+
+  const { provider, signer, signerAddress, chainId, gameProvider } = state;
 
   const connect = async () => {
     if (window.ethereum) {
@@ -20,7 +25,7 @@ export const useProvider = () => {
       const signer = provider.getSigner();
       const address = await signer.getAddress();
       const chainId = await signer.getChainId();
-      setState({ provider, signer, account: address, chainId });
+      setState({ ...state, provider, signer, signerAddress: address, chainId });
     }
   };
 
@@ -38,9 +43,12 @@ export const useProvider = () => {
   return {
     provider,
     signer,
-    account,
+    signerAddress,
     chainId,
     connect,
     signMessage,
+    gameProvider,
+    account,
+    setAccount,
   };
 };
