@@ -8,12 +8,20 @@ import AuthControllerABI from "../../abi/AuthController.sol/AuthController.abi.j
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { worldSend, txReduced$, singletonEntity, worldContract, fastTxExecutor, bindFastTxExecute }: SetupNetworkResult,
+  {
+    worldSend,
+    txReduced$,
+    singletonEntity,
+    worldContract,
+    fastTxExecutor,
+    bindFastTxExecute,
+  }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
   const permissions: any = {};
 
   const createAccount = async () => {
+    console.log(worldContract.callStatic.getCounterGameSystemAddress());
     const tx = await worldSend("createAccount", []);
   };
 
@@ -29,38 +37,49 @@ export function createSystemCalls(
         secondAddress
       );
     if (!permissions["createGame"]) {
-      const permissionId = await authPermissions(actionEnv, populatedTransaction.data!);
+      const permissionId = await authPermissions(
+        actionEnv,
+        populatedTransaction.data!
+      );
       permissions["createGame"] = permissionId;
     }
-    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(
+      actionEnv
+    );
     const accountSend = bindFastTxExecute(accountContract);
-    
-    const tx = await accountSend("execute", [
+
+    await accountSend("execute", [
       permissions["createGame"],
-      populatedTransaction.data!
+      populatedTransaction.data!,
     ]);
     delete permissions["createGame"];
     return getComponentValue(CounterGame, singletonEntity);
   };
 
   const acceptGame = async (actionEnv: ActionEnv, gameId: string) => {
-    const populateTransaction = await worldContract.populateTransaction.acceptGame(gameId);
+    const populateTransaction =
+      await worldContract.populateTransaction.acceptGame(gameId);
     if (!permissions["acceptGame"]) {
-      const permissionId = await authPermissions(actionEnv, populateTransaction.data!);
+      const permissionId = await authPermissions(
+        actionEnv,
+        populateTransaction.data!
+      );
       permissions["acceptGame"] = permissionId;
     }
-    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(
+      actionEnv
+    );
     const accountSend = bindFastTxExecute(accountContract);
-    
+
     const tx = await accountSend("execute", [
       permissions["acceptGame"],
-      populateTransaction.data!
+      populateTransaction.data!,
     ]);
-    console.log(await tx.wait())
+    console.log(await tx.wait());
 
-    console.log("ACCEPTED GAME")
+    console.log("ACCEPTED GAME");
     delete permissions["acceptGame"];
-    console.log("ACCEPTED GAME AFTER WAIT")
+    console.log("ACCEPTED GAME AFTER WAIT");
     return getComponentValue(CounterGame, singletonEntity);
   };
 
@@ -69,20 +88,23 @@ export function createSystemCalls(
     gameId: string,
     message: string
   ) => {
-    const populateTransaction = await worldContract.populateTransaction.increment(
-      gameId,
-      message
-    );
+    const populateTransaction =
+      await worldContract.populateTransaction.increment(gameId, message);
     if (!permissions["increment"]) {
-      const permissionId = await authPermissions(actionEnv, populateTransaction.data!.substring(0,74));
+      const permissionId = await authPermissions(
+        actionEnv,
+        populateTransaction.data!.substring(0, 74)
+      );
       permissions["increment"] = permissionId;
     }
-    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(
+      actionEnv
+    );
     const accountSend = bindFastTxExecute(accountContract);
-    
+
     const tx = await accountSend("execute", [
-      permissions["increment"], 
-      populateTransaction.data!
+      permissions["increment"],
+      populateTransaction.data!,
     ]);
   };
 
@@ -90,27 +112,30 @@ export function createSystemCalls(
     actionEnv: ActionEnv,
     populatedTransactionData: string
   ) => {
-    const limitData = await worldContract.callStatic.getLimitData(
+    const gameContractAddress =
+      await worldContract.callStatic.getCounterGameSystemAddress();
+    const gameContract = await actionEnv.accountSystem.getGameContract(
+      gameContractAddress
+    );
+    const limitData = await gameContract.callStatic.getLimitData(
       populatedTransactionData
     );
-
     const permissionData = await getPermissionData(actionEnv, limitData);
     const signature = await getSignature(actionEnv, permissionData.hash);
     const accountContract = await actionEnv.accountSystem.getAccountContract(
       actionEnv
     );
+    console.log(permissionData.data, signature);
     const permissionId = await accountContract.callStatic.auth(
       permissionData.data,
       signature
     );
+
     const accountSend = bindFastTxExecute(accountContract);
-    await accountSend("auth", [
-      permissionData.data, signature
-    ]);
+    await accountSend("auth", [permissionData.data, signature]);
 
     return permissionId.toNumber();
-  }
-
+  };
 
   const getPermissionData = async (actionEnv: ActionEnv, limitData: any) => {
     const authController = await worldContract.getAuthController();
@@ -127,11 +152,13 @@ export function createSystemCalls(
       limitChecker: await worldContract.getCounterGameSystemAddress(),
       limitData: limitData,
     };
-    console.log(touple)
+    console.log(touple);
 
     return {
       data: touple,
-      hash: await authControllerContract.callStatic.getPermissionDataHash(touple)
+      hash: await authControllerContract.callStatic.getPermissionDataHash(
+        touple
+      ),
     };
   };
 
