@@ -33,7 +33,7 @@ export const useAccountSystem = () => {
           type: 2,
           maxFeePerGas: 0,
           maxPriorityFeePerGas: 0,
-          gasLimit: 1000000,
+          gasLimit: 2000000,
         }
       );
     };

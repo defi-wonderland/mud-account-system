@@ -9,7 +9,7 @@ import AuthControllerABI from "../../../contracts/out/AuthController.sol/AuthCon
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { worldSend, txReduced$, singletonEntity, worldContract }: SetupNetworkResult,
+  { worldSend, txReduced$, singletonEntity, worldContract, fastTxExecutor, bindFastTxExecute }: SetupNetworkResult,
   { CounterGame }: ClientComponents
 ) {
   const permissions: any = {};
@@ -40,11 +40,24 @@ export function createSystemCalls(
       actionEnv
     );
     console.log(1);
+    
+    // const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    // const tx1 = await fastTxExecutor?.fastTxExecute(accountContract, "execute", [
+    const accountSend = bindFastTxExecute(await actionEnv.accountSystem.getAccountContract(actionEnv));
+    const tx1 = await accountSend("execute", [
+      permissions["createGame"],
+      populatedTransaction.data!
+    ]);
+    console.log(tx1)
+    console.log('NEVER ARTRIVES HERE HERE!')
+
     const tx = await sendThroughAccount(
       permissions["createGame"],
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       populatedTransaction.data!
     );
+    console.log(await tx.wait())
+
     console.log(2);
     delete permissions["createGame"];
     console.log(4);
@@ -66,6 +79,7 @@ export function createSystemCalls(
       permissions["acceptGame"],
       populateTransaction.data!
     );
+    console.log(await tx.wait())
 
     console.log("ACCEPTED GAME")
     delete permissions["acceptGame"];
