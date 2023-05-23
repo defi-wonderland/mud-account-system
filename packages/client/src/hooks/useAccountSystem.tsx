@@ -22,23 +22,6 @@ export const useAccountSystem = () => {
     return accountFactoryContract.ownerAccounts(burnerAccount, index);
   };
 
-  const sendThrough = async (actionEnv: ActionEnv) => {
-    const accountContract = await getAccountContract(actionEnv);
-
-    return (permissionId: string, data: string) => {
-      return accountContract.execute(
-        permissionId,
-        ethers.utils.toUtf8Bytes(data), 
-        {
-          type: 2,
-          maxFeePerGas: 0,
-          maxPriorityFeePerGas: 0,
-          gasLimit: 2000000,
-        }
-      );
-    };
-  };
-
   const getBurnerWalletProvider = async () => {
     const provider = new providers.JsonRpcProvider(
       (await getNetworkConfig()).provider.jsonRpcUrl
@@ -68,7 +51,6 @@ export const useAccountSystem = () => {
 
   return {
     getAccounts,
-    sendThrough,
     getAccountContract,
     getBurnerWalletProvider,
     getCounterGameSystemContract,

@@ -1,5 +1,4 @@
 import { getComponentValue } from "@latticexyz/recs";
-import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { ethers } from "ethers";
@@ -16,7 +15,6 @@ export function createSystemCalls(
 
   const createAccount = async () => {
     const tx = await worldSend("createAccount", []);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const createGame = async (
@@ -34,33 +32,14 @@ export function createSystemCalls(
       const permissionId = await authPermissions(actionEnv, populatedTransaction.data!);
       permissions["createGame"] = permissionId;
     }
-
-    console.log(populatedTransaction);
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
-      actionEnv
-    );
-    console.log(1);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountSend = bindFastTxExecute(accountContract);
     
-    // const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
-    // const tx1 = await fastTxExecutor?.fastTxExecute(accountContract, "execute", [
-    const accountSend = bindFastTxExecute(await actionEnv.accountSystem.getAccountContract(actionEnv));
-    const tx1 = await accountSend("execute", [
+    const tx = await accountSend("execute", [
       permissions["createGame"],
       populatedTransaction.data!
     ]);
-    console.log(tx1)
-    console.log('NEVER ARTRIVES HERE HERE!')
-
-    const tx = await sendThroughAccount(
-      permissions["createGame"],
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      populatedTransaction.data!
-    );
-    console.log(await tx.wait())
-
-    console.log(2);
     delete permissions["createGame"];
-    console.log(4);
     return getComponentValue(CounterGame, singletonEntity);
   };
 
@@ -70,15 +49,13 @@ export function createSystemCalls(
       const permissionId = await authPermissions(actionEnv, populateTransaction.data!);
       permissions["acceptGame"] = permissionId;
     }
-
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
-      actionEnv
-    );
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tx = await sendThroughAccount(
+    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountSend = bindFastTxExecute(accountContract);
+    
+    const tx = await accountSend("execute", [
       permissions["acceptGame"],
       populateTransaction.data!
-    );
+    ]);
     console.log(await tx.wait())
 
     console.log("ACCEPTED GAME")
@@ -100,11 +77,13 @@ export function createSystemCalls(
       const permissionId = await authPermissions(actionEnv, populateTransaction.data!.substring(0,74));
       permissions["increment"] = permissionId;
     }
-    const sendThroughAccount = await actionEnv.accountSystem.sendThrough(
-      actionEnv
-    );
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tx = await sendThroughAccount(permissions["increment"], populateTransaction.data!);
+    const accountContract = await actionEnv.accountSystem.getAccountContract(actionEnv);
+    const accountSend = bindFastTxExecute(accountContract);
+    
+    const tx = await accountSend("execute", [
+      permissions["increment"], 
+      populateTransaction.data!
+    ]);
   };
 
   const authPermissions = async (
@@ -124,13 +103,11 @@ export function createSystemCalls(
       permissionData.data,
       signature
     );
-    await accountContract.auth(permissionData.data, signature, {
-      type: 2,
-      maxFeePerGas: 0,
-      maxPriorityFeePerGas: 0,
-      gasLimit: 1000000,
-    });
-
+    const accountSend = bindFastTxExecute(accountContract);
+    await accountSend("auth", [
+      permissionData.data, signature
+    ]);
+    
     console.log("AUTH SUCCESSFULL")
     // TODO CHECK IF THIS IS OK!
     return permissionId.toNumber();
@@ -149,7 +126,7 @@ export function createSystemCalls(
       authController: await worldContract.getAuthController(),
       client: (await actionEnv.accountSystem.getBurnerWalletProvider()).address,
       world: worldContract.address,
-      limitChecker: await worldContract.getAccountSystemAddress(),
+      limitChecker: await worldContract.getCounterGameSystemAddress(),
       limitData: limitData,
     };
 

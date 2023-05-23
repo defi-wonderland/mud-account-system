@@ -3,12 +3,13 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { IAccountFactory } from "../account/AccountFactory.sol";
+import { IAccount } from "../account/Account.sol";
 import { AuthController } from "../authController/AuthController.sol";
 import {
   AccountFactorySingleton
 } from "../codegen/Tables.sol";
 
-contract AccountSystem is System {
+contract AccountSystem is IAccount, System {
 
   address public ACCOUNT_FACTORY;
   address public AUTH_CONTROLLER;
@@ -34,6 +35,17 @@ contract AccountSystem is System {
 
   function getAccountSystemAddress() external view returns (address _accountSystemAddress) {
     _accountSystemAddress = address(this);
+  }
+
+
+  function auth(IAccount.PermissionData calldata _permissionData, bytes calldata _signature)
+        external
+        returns (uint256 _permissionId) {
+    revert('not implemented');
+  }
+
+  function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData) {
+    revert('not implemented');
   }
 
 }

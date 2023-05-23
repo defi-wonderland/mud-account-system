@@ -20,6 +20,11 @@ interface IAccount {
         ILimitCheckerSystem limitChecker;
         bytes limitData;
     }
+    function auth(PermissionData calldata _permissionData, bytes calldata _signature)
+        external
+        returns (uint256 _permissionId);
+
+    function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData);
 }
 
 contract Account is IAccount {
