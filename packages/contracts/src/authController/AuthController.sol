@@ -17,7 +17,10 @@ interface IAuthController {
         pure
         returns (bool _authorized);
 
-    function getPermissionDataHash(IAccount.PermissionData calldata _permissionData) external view returns (bytes32 _permissionDataHash);
+    function getPermissionDataHash(IAccount.PermissionData calldata _permissionData)
+        external
+        view
+        returns (bytes32 _permissionDataHash);
 }
 
 contract AuthController is IAuthController {
@@ -30,22 +33,24 @@ contract AuthController is IAuthController {
         returns (bool _authorized)
     {
         // TODO Fix auth signature checks
-        return true;
-        // // Hash the permission data and nonce
-        // bytes32 _hash = keccak256(abi.encode(_permissionData));
-        // bytes32 _ethSignedMessageHash = ECDSA.toEthSignedMessageHash(_hash);
+        // return true;
+        // Hash the permission data and nonce
+        bytes32 _hash = keccak256(abi.encode(_permissionData));
+        bytes32 _ethSignedMessageHash = ECDSA.toEthSignedMessageHash(_hash);
 
-        // // Get the signer with the given hash and signature
-        // address _signer = ECDSA.recover(_ethSignedMessageHash, _signature);
+        // Get the signer with the given hash and signature
+        address _signer = ECDSA.recover(_ethSignedMessageHash, _signature);
 
-        // // Check if the signer is the client
-        // _authorized = _signer == _permissionData.client;
+        // Check if the signer is the client
+        _authorized = _signer == _permissionData.client;
     }
 
-    function getPermissionDataHash(
-        IAccount.PermissionData calldata _permissionData
-    ) external view override returns (bytes32 _permissionDataHash) {
+    function getPermissionDataHash(IAccount.PermissionData calldata _permissionData)
+        external
+        view
+        override
+        returns (bytes32 _permissionDataHash)
+    {
         _permissionDataHash = keccak256(abi.encode(_permissionData));
     }
-
 }
