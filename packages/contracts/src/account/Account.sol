@@ -20,11 +20,28 @@ interface IAccount {
         ILimitCheckerSystem limitChecker;
         bytes limitData;
     }
+
+    /**
+     * @notice function that authorizes a client to execute an action on behalf of the signer
+     * @param _permissionData The permission data struct with the information of the underlying permission
+     * @param _signature The signature obtained from the permission data hash sign
+     */
     function auth(PermissionData calldata _permissionData, bytes calldata _signature)
         external
         returns (uint256 _permissionId);
 
+    /**
+     * @notice function that executes an action on behalf of the signer
+     * @param _permissionId The permission id related to the given permission
+     * @param _data The execution data and arguments
+     */
     function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData);
+
+    /**
+     * @notice function that revokes a permission
+     * @param _permissionId The permission id related to the given permission
+     */
+    function revoke(uint256 _permissionId) external;
 }
 
 contract Account is IAccount {
@@ -49,7 +66,7 @@ contract Account is IAccount {
         external
         returns (uint256 _permissionId)
     {
-        bool _authorized = _permissionData.authController.auth(_permissionData, _signature);
+        bool _authorized = _permissionData.authController.auth(owner, _permissionData, _signature);
         if (!_authorized) revert("Account::auth: invalid authorizarion");
         _permissionIdCounter = _permissionIdCounter + 1;
         _permissionId = _permissionIdCounter;

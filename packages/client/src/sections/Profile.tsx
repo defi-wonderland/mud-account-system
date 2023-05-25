@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getComponentValueStrict, Has } from "@latticexyz/recs";
 import { useEntityQuery } from "@latticexyz/react";
 import { getBurnerWallet } from "@latticexyz/std-client";
@@ -9,6 +9,7 @@ import { useMUD } from "../MUDContext";
 import { useDataContext } from "../context";
 
 export const Profile = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { account, setAccount, signerAddress, chainId, connect } =
     useDataContext().actionEnv.provider;
 
@@ -29,11 +30,20 @@ export const Profile = () => {
         accountSystemId[0]
       ).value;
 
-      getAccounts(accountFactory, burner, "0").then((address) => {
+      getAccounts(accountFactory, signerAddress!, "0").then((address) => {
         setAccount(address);
       });
     } catch (error) {
       console.log("error gettting AccountSystem");
+    }
+  };
+
+  const handleCreateAccount = async () => {
+    if (signerAddress) {
+      setLoading(true);
+      await createAccount(signerAddress);
+      await handleGetAccounts();
+      setLoading(false);
     }
   };
 
@@ -56,11 +66,14 @@ export const Profile = () => {
       <br />
       <p>Burner address: {burnerWallet.address}</p>
       <br />
-      <button onClick={createAccount}>Create Account</button>
+      <button onClick={handleCreateAccount}>Create Account</button>
       <br />
       <br />
-      <p>Signer Accounts:</p>
-      <p>Account contract: {account || ""}</p>
+      <br />
+      <p>Created account:</p>
+      <br />
+      {loading && <p>Loading...</p>}
+      {!loading && account && <p>{account}</p>}
       <br />
     </div>
   );

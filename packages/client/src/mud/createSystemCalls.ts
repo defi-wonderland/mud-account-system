@@ -20,9 +20,9 @@ export function createSystemCalls(
 ) {
   const permissions: any = {};
 
-  const createAccount = async () => {
-    console.log(worldContract.callStatic.getCounterGameSystemAddress());
-    const tx = await worldSend("createAccount", []);
+  const createAccount = async (signerAddress: string) => {
+    const tx = await worldSend("createAccount", [signerAddress]);
+    await tx.wait(1);
   };
 
   const createGame = async (
@@ -125,7 +125,7 @@ export function createSystemCalls(
     const accountContract = await actionEnv.accountSystem.getAccountContract(
       actionEnv
     );
-    console.log(permissionData.data, signature);
+    
     const permissionId = await accountContract.callStatic.auth(
       permissionData.data,
       signature
@@ -162,8 +162,8 @@ export function createSystemCalls(
     };
   };
 
-  const getSignature = async (actionEnv: ActionEnv, permissionData: any) => {
-    return await actionEnv.provider.signer?.signMessage(permissionData);
+  const getSignature = async (actionEnv: ActionEnv, permissionDataHash: string) => {
+    return await actionEnv.provider.signer?.signMessage(permissionDataHash);
   };
 
   return {

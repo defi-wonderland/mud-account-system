@@ -8,7 +8,7 @@ import { IAccount } from "./../../account/Account.sol";
 interface IAccountSystem {
   function setAccountFactory(address _accountFactory) external;
 
-  function createAccount() external returns (address _account);
+  function createAccount(address _owner) external returns (address _account);
 
   function ownerAccounts(address _owner, uint256 _index) external view returns (address);
 
@@ -22,4 +22,6 @@ interface IAccountSystem {
   ) external returns (uint256 _permissionId);
 
   function execute(uint256 _permissionId, bytes calldata _data) external returns (bytes memory _returnData);
+
+  function revoke(uint256 _permissionId) external;
 }

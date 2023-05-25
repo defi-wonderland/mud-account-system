@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {MudV2Test} from "@latticexyz/std-contracts/src/test/MudV2Test.t.sol";
 import {getKeysWithValue} from "@latticexyz/world/src/modules/keyswithvalue/getKeysWithValue.sol";
 
@@ -16,6 +16,8 @@ contract CounterGameSystemTest is MudV2Test {
     using CounterGame for bytes;
 
     IWorld public world;
+    address public sender = address(0x003);
+
     address public accountOne = address(0x001);
     address public accountTwo = address(0x002);
 
